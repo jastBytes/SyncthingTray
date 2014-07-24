@@ -109,6 +109,11 @@ namespace SyncthingTray
         void ActiveProcess_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
         {
             this.Invoke(new MethodInvoker(() => textBoxLog.AppendText(e.Data + System.Environment.NewLine)));
+            if (WindowState == FormWindowState.Minimized)
+            {
+                this.Invoke(
+                    new MethodInvoker(() => notifyIcon.ShowBalloonTip(1000, "SyncthingTray", e.Data, ToolTipIcon.Info)));
+            }
         }
 
         private void SyncthingTray_Resize(object sender, EventArgs e)
