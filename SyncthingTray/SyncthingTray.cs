@@ -9,26 +9,20 @@ namespace SyncthingTray
 {
     public partial class SyncthingTray : Form
     {
+        #region Member
         private Process _activeProcess;
         private SyncthingConfig _syncthingConfig;
+        #endregion
 
         public SyncthingTray()
         {
             InitializeComponent();
         }
 
-
+        #region Events
         void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
             ReloadConfig();
-        }
-
-        private void ReloadConfig()
-        {
-            chkWebGui.Checked = _syncthingConfig.GuiEnabled;
-            chkUpnp.Checked = _syncthingConfig.UpnpEnabled;
-            chkStartBrowser.Checked = _syncthingConfig.StartBrowser;
-            txtWebGui.Text = _syncthingConfig.GuiAddress;
         }
 
         private void btnSetPath_Click(object sender, EventArgs e)
@@ -38,28 +32,6 @@ namespace SyncthingTray
             var fileName = openFileDialog.FileName.Trim();
             CheckPath(fileName);
         }
-        private void CheckPath(string syncthingPath)
-        {
-            btnStart.Enabled = false;
-            btnStop.Enabled = false;
-            chkStartOnBoot.Enabled = false;
-            groupBoxSyncthing.Enabled = false;
-
-            if (string.IsNullOrEmpty(syncthingPath) || !File.Exists(syncthingPath)) return;
-            txtPath.Text = syncthingPath;
-            Settings.Default.SyncthingPath = syncthingPath;
-            Settings.Default.Save();
-
-            var isRunning = IsSyncthingRunning();
-            btnStart.Enabled = !isRunning;
-            btnStop.Enabled = isRunning;
-            chkStartOnBoot.Enabled = true;
-            groupBoxSyncthing.Enabled = true;
-            _syncthingConfig = SyncthingConfig.Load();
-            _syncthingConfig.Watcher.Changed += Watcher_Changed;
-            ReloadConfig();
-        }
-
         private void timerCheckSync_Tick(object sender, EventArgs e)
         {
             var isRunning = IsSyncthingRunning();
@@ -67,13 +39,13 @@ namespace SyncthingTray
             {
                 lblState.Text = "Running";
                 lblState.ForeColor = Color.Green;
-                notifyIcon.Icon = Icon.ExtractAssociatedIcon(Path.Combine(Application.StartupPath, "Resources", "logo-64.ico"));
+                notifyIcon.Icon = Resources.logo_64;
             }
             else
             {
                 lblState.Text = "Not running";
                 lblState.ForeColor = Color.OrangeRed;
-                notifyIcon.Icon = Icon.ExtractAssociatedIcon(Path.Combine(Application.StartupPath, "Resources", "logo-64-grayscale.ico"));
+                notifyIcon.Icon = Resources.logo_64_grayscale;
             }
             btnStart.Enabled = !isRunning;
             btnStop.Enabled = isRunning;
@@ -82,11 +54,6 @@ namespace SyncthingTray
         private void txtPath_TextChanged(object sender, EventArgs e)
         {
             CheckPath(txtPath.Text.Trim());
-        }
-
-        public static bool IsSyncthingRunning()
-        {
-            return ProcessHelper.IsProcessOpen("syncthing");
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -150,9 +117,10 @@ namespace SyncthingTray
                 this.ShowInTaskbar = true;
         }
 
-        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            WindowState = WindowState == FormWindowState.Normal ? FormWindowState.Minimized : FormWindowState.Normal;
+            if (e.Button == MouseButtons.Left)
+                WindowState = WindowState == FormWindowState.Normal ? FormWindowState.Minimized : FormWindowState.Normal;
         }
 
         private void showSyncthingTraySettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -200,6 +168,13 @@ namespace SyncthingTray
 
         private void SyncthingTray_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (WindowState != FormWindowState.Minimized)
+            {
+                e.Cancel = true;
+                WindowState = FormWindowState.Minimized;
+                return;
+            }
+
             if (IsSyncthingRunning())
             {
                 btnStop.PerformClick();
@@ -217,6 +192,7 @@ namespace SyncthingTray
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Minimized;
             this.Close();
         }
 
@@ -229,5 +205,46 @@ namespace SyncthingTray
         {
             txtWebGui.Enabled = chkWebGui.Checked;
         }
+        #endregion
+
+        private void ReloadConfig()
+        {
+            chkWebGui.Checked = _syncthingConfig.GuiEnabled;
+            chkUpnp.Checked = _syncthingConfig.UpnpEnabled;
+            chkStartBrowser.Checked = _syncthingConfig.StartBrowser;
+            txtWebGui.Text = _syncthingConfig.GuiAddress;
+        }
+
+        private void CheckPath(string syncthingPath)
+        {
+            btnStart.Enabled = false;
+            btnStop.Enabled = false;
+            timerCheckSync.Enabled = false;
+            groupBoxSyncthing.Enabled = false;
+
+            if (string.IsNullOrEmpty(syncthingPath) || !File.Exists(syncthingPath)) return;
+            txtPath.Text = syncthingPath;
+            Settings.Default.SyncthingPath = syncthingPath;
+            Settings.Default.Save();
+
+            var isRunning = IsSyncthingRunning();
+            btnStart.Enabled = !isRunning;
+            btnStop.Enabled = isRunning;
+            timerCheckSync.Enabled = true;
+
+            _syncthingConfig = SyncthingConfig.Load();
+            if (_syncthingConfig != null)
+            {
+                _syncthingConfig.Watcher.Changed += Watcher_Changed;
+                ReloadConfig();
+                groupBoxSyncthing.Enabled = true;
+            }
+        }
+
+        public static bool IsSyncthingRunning()
+        {
+            return ProcessHelper.IsProcessOpen("syncthing");
+        }
+
     }
 }

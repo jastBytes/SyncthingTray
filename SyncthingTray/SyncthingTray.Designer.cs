@@ -83,7 +83,7 @@
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
             this.notifyIcon.Text = "SyncthingTray";
             this.notifyIcon.Visible = true;
-            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
+            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
             // 
             // contextMenuStrip
             // 
@@ -118,7 +118,6 @@
             // chkStartOnBoot
             // 
             this.chkStartOnBoot.AutoSize = true;
-            this.chkStartOnBoot.Enabled = false;
             this.chkStartOnBoot.Location = new System.Drawing.Point(347, 44);
             this.chkStartOnBoot.Name = "chkStartOnBoot";
             this.chkStartOnBoot.Size = new System.Drawing.Size(87, 17);
