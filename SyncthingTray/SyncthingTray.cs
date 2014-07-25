@@ -26,7 +26,7 @@ namespace SyncthingTray
         {
             btnStart.Enabled = false;
             btnStop.Enabled = false;
-            chkStartOnBoot.Enabled = false;
+            timerCheckSync.Enabled = false;
 
             if (string.IsNullOrEmpty(syncthingPath) || !File.Exists(syncthingPath)) return;
             txtPath.Text = syncthingPath;
@@ -35,7 +35,7 @@ namespace SyncthingTray
             var isRunning = IsSyncthingRunning();
             btnStart.Enabled = !isRunning;
             btnStop.Enabled = isRunning;
-            chkStartOnBoot.Enabled = true;
+            timerCheckSync.Enabled = true;
         }
 
         private void timerCheckSync_Tick(object sender, EventArgs e)
@@ -45,17 +45,16 @@ namespace SyncthingTray
             {
                 lblState.Text = "RUNNING";
                 lblState.ForeColor = Color.Green;
-                notifyIcon.Icon = Icon.ExtractAssociatedIcon(Path.Combine(Application.StartupPath, "Resources", "logo-64.ico"));
+                notifyIcon.Icon = Resources.logo_64;
             }
             else
             {
                 lblState.Text = "NOT RUNNING";
                 lblState.ForeColor = Color.Red;
-                notifyIcon.Icon = Icon.ExtractAssociatedIcon(Path.Combine(Application.StartupPath, "Resources", "logo-64-grayscale.ico"));
+                notifyIcon.Icon = Resources.logo_64_grayscale;
             }
             btnStart.Enabled = !isRunning;
             btnStop.Enabled = isRunning;
-            chkStartOnBoot.Enabled = true;
         }
 
         private void txtPath_TextChanged(object sender, EventArgs e)
