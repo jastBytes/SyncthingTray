@@ -27,7 +27,7 @@ namespace SyncthingTray
                 (RegistryRun, false);
 
             if (rk == null) throw new ArgumentException("Couldn't get read access to registry.");
-            return !string.IsNullOrEmpty(rk.GetValue(Application.ProductName, false).ToString());
+            return !string.IsNullOrEmpty(rk.GetValue(Application.ProductName, "").ToString());
         }
     }
 }

@@ -110,7 +110,6 @@
             // chkStartOnBoot
             // 
             this.chkStartOnBoot.AutoSize = true;
-            this.chkStartOnBoot.Enabled = false;
             this.chkStartOnBoot.Location = new System.Drawing.Point(15, 71);
             this.chkStartOnBoot.Name = "chkStartOnBoot";
             this.chkStartOnBoot.Size = new System.Drawing.Size(87, 17);
