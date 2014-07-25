@@ -9,10 +9,26 @@ namespace SyncthingTray
 {
     public partial class SyncthingTray : Form
     {
-        private System.Diagnostics.Process ActiveProcess;
+        private Process _activeProcess;
+        private SyncthingConfig _syncthingConfig;
+
         public SyncthingTray()
         {
             InitializeComponent();
+        }
+
+
+        void Watcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            ReloadConfig();
+        }
+
+        private void ReloadConfig()
+        {
+            chkWebGui.Checked = _syncthingConfig.GuiEnabled;
+            chkUpnp.Checked = _syncthingConfig.UpnpEnabled;
+            chkStartBrowser.Checked = _syncthingConfig.StartBrowser;
+            txtWebGui.Text = _syncthingConfig.GuiAddress;
         }
 
         private void btnSetPath_Click(object sender, EventArgs e)
@@ -27,15 +43,21 @@ namespace SyncthingTray
             btnStart.Enabled = false;
             btnStop.Enabled = false;
             chkStartOnBoot.Enabled = false;
+            groupBoxSyncthing.Enabled = false;
 
             if (string.IsNullOrEmpty(syncthingPath) || !File.Exists(syncthingPath)) return;
             txtPath.Text = syncthingPath;
             Settings.Default.SyncthingPath = syncthingPath;
             Settings.Default.Save();
+
             var isRunning = IsSyncthingRunning();
             btnStart.Enabled = !isRunning;
             btnStop.Enabled = isRunning;
             chkStartOnBoot.Enabled = true;
+            groupBoxSyncthing.Enabled = true;
+            _syncthingConfig = SyncthingConfig.Load();
+            _syncthingConfig.Watcher.Changed += Watcher_Changed;
+            ReloadConfig();
         }
 
         private void timerCheckSync_Tick(object sender, EventArgs e)
@@ -43,19 +65,18 @@ namespace SyncthingTray
             var isRunning = IsSyncthingRunning();
             if (isRunning)
             {
-                lblState.Text = "RUNNING";
+                lblState.Text = "Running";
                 lblState.ForeColor = Color.Green;
                 notifyIcon.Icon = Icon.ExtractAssociatedIcon(Path.Combine(Application.StartupPath, "Resources", "logo-64.ico"));
             }
             else
             {
-                lblState.Text = "NOT RUNNING";
-                lblState.ForeColor = Color.Red;
+                lblState.Text = "Not running";
+                lblState.ForeColor = Color.OrangeRed;
                 notifyIcon.Icon = Icon.ExtractAssociatedIcon(Path.Combine(Application.StartupPath, "Resources", "logo-64-grayscale.ico"));
             }
             btnStart.Enabled = !isRunning;
             btnStop.Enabled = isRunning;
-            chkStartOnBoot.Enabled = true;
         }
 
         private void txtPath_TextChanged(object sender, EventArgs e)
@@ -72,12 +93,12 @@ namespace SyncthingTray
         {
             try
             {
-                if (ActiveProcess != null)
+                if (_activeProcess != null)
                 {
-                    ActiveProcess.OutputDataReceived -= ActiveProcess_OutputDataReceived;
-                    ActiveProcess.ErrorDataReceived -= ActiveProcess_OutputDataReceived;
-                    ActiveProcess.Kill();
-                    ActiveProcess = null;
+                    _activeProcess.OutputDataReceived -= ActiveProcess_OutputDataReceived;
+                    _activeProcess.ErrorDataReceived -= ActiveProcess_OutputDataReceived;
+                    _activeProcess.Kill();
+                    _activeProcess = null;
                 }
                 else
                 {
@@ -92,13 +113,15 @@ namespace SyncthingTray
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            textBoxLog.Clear();
+
             try
             {
-                ActiveProcess = ProcessHelper.StartProcess(Settings.Default.SyncthingPath);
-                ActiveProcess.OutputDataReceived += ActiveProcess_OutputDataReceived;
-                ActiveProcess.ErrorDataReceived += ActiveProcess_OutputDataReceived;
-                ActiveProcess.BeginOutputReadLine();
-                ActiveProcess.BeginErrorReadLine();
+                _activeProcess = ProcessHelper.StartProcess(Settings.Default.SyncthingPath);
+                _activeProcess.OutputDataReceived += ActiveProcess_OutputDataReceived;
+                _activeProcess.ErrorDataReceived += ActiveProcess_OutputDataReceived;
+                _activeProcess.BeginOutputReadLine();
+                _activeProcess.BeginErrorReadLine();
             }
             catch (Exception ex)
             {
@@ -199,7 +222,12 @@ namespace SyncthingTray
 
         private void openWebinterfaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start("http://127.0.0.1:8080");
+            if (_syncthingConfig.GuiEnabled) Process.Start("http://" + _syncthingConfig.GuiAddress);
+        }
+
+        private void chkWebGui_CheckedChanged(object sender, EventArgs e)
+        {
+            txtWebGui.Enabled = chkWebGui.Checked;
         }
     }
 }

@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="ProcessHelper.cs" />
     <Compile Include="RegistryHelper.cs" />
+    <Compile Include="SyncthingConfig.cs" />
     <Compile Include="SyncthingTray.cs">
       <SubType>Form</SubType>
     </Compile>

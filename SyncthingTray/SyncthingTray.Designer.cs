@@ -46,14 +46,22 @@
             this.timerCheckSync = new System.Windows.Forms.Timer(this.components);
             this.textBoxLog = new System.Windows.Forms.TextBox();
             this.chkMinimizeOnStart = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxSyncthing = new System.Windows.Forms.GroupBox();
+            this.chkUpnp = new System.Windows.Forms.CheckBox();
+            this.chkStartBrowser = new System.Windows.Forms.CheckBox();
+            this.chkWebGui = new System.Windows.Forms.CheckBox();
+            this.txtWebGui = new System.Windows.Forms.TextBox();
             this.contextMenuStrip.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBoxSyncthing.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSetPath
             // 
-            this.btnSetPath.Location = new System.Drawing.Point(13, 13);
+            this.btnSetPath.Location = new System.Drawing.Point(6, 17);
             this.btnSetPath.Name = "btnSetPath";
-            this.btnSetPath.Size = new System.Drawing.Size(108, 23);
+            this.btnSetPath.Size = new System.Drawing.Size(116, 23);
             this.btnSetPath.TabIndex = 0;
             this.btnSetPath.Text = "&Set Syncthing Path";
             this.btnSetPath.UseVisualStyleBackColor = true;
@@ -61,9 +69,9 @@
             // 
             // txtPath
             // 
-            this.txtPath.Location = new System.Drawing.Point(127, 15);
+            this.txtPath.Location = new System.Drawing.Point(128, 19);
             this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(341, 20);
+            this.txtPath.Size = new System.Drawing.Size(213, 20);
             this.txtPath.TabIndex = 1;
             this.txtPath.TextChanged += new System.EventHandler(this.txtPath_TextChanged);
             // 
@@ -111,7 +119,7 @@
             // 
             this.chkStartOnBoot.AutoSize = true;
             this.chkStartOnBoot.Enabled = false;
-            this.chkStartOnBoot.Location = new System.Drawing.Point(15, 71);
+            this.chkStartOnBoot.Location = new System.Drawing.Point(347, 44);
             this.chkStartOnBoot.Name = "chkStartOnBoot";
             this.chkStartOnBoot.Size = new System.Drawing.Size(87, 17);
             this.chkStartOnBoot.TabIndex = 3;
@@ -128,7 +136,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(284, 47);
+            this.label1.Location = new System.Drawing.Point(128, 51);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 13);
             this.label1.TabIndex = 4;
@@ -137,33 +145,33 @@
             // lblState
             // 
             this.lblState.AutoSize = true;
-            this.lblState.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblState.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblState.ForeColor = System.Drawing.Color.Red;
-            this.lblState.Location = new System.Drawing.Point(373, 47);
+            this.lblState.Location = new System.Drawing.Point(217, 51);
             this.lblState.Name = "lblState";
-            this.lblState.Size = new System.Drawing.Size(95, 13);
+            this.lblState.Size = new System.Drawing.Size(62, 13);
             this.lblState.TabIndex = 5;
-            this.lblState.Text = "NOT RUNNING";
+            this.lblState.Text = "Not running";
             // 
             // btnStart
             // 
             this.btnStart.Enabled = false;
-            this.btnStart.Location = new System.Drawing.Point(13, 42);
+            this.btnStart.Location = new System.Drawing.Point(6, 46);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(108, 23);
+            this.btnStart.Size = new System.Drawing.Size(55, 23);
             this.btnStart.TabIndex = 6;
-            this.btnStart.Text = "Start Syncthing";
+            this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // btnStop
             // 
             this.btnStop.Enabled = false;
-            this.btnStop.Location = new System.Drawing.Point(127, 42);
+            this.btnStop.Location = new System.Drawing.Point(67, 46);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(87, 23);
+            this.btnStop.Size = new System.Drawing.Size(55, 23);
             this.btnStop.TabIndex = 7;
-            this.btnStop.Text = "Stop Syncthing";
+            this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
@@ -189,7 +197,7 @@
             // chkMinimizeOnStart
             // 
             this.chkMinimizeOnStart.AutoSize = true;
-            this.chkMinimizeOnStart.Location = new System.Drawing.Point(109, 71);
+            this.chkMinimizeOnStart.Location = new System.Drawing.Point(347, 21);
             this.chkMinimizeOnStart.Name = "chkMinimizeOnStart";
             this.chkMinimizeOnStart.Size = new System.Drawing.Size(104, 17);
             this.chkMinimizeOnStart.TabIndex = 9;
@@ -197,20 +205,86 @@
             this.chkMinimizeOnStart.UseVisualStyleBackColor = true;
             this.chkMinimizeOnStart.CheckedChanged += new System.EventHandler(this.chkMinimizeOnStart_CheckedChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btnSetPath);
+            this.groupBox1.Controls.Add(this.txtPath);
+            this.groupBox1.Controls.Add(this.chkMinimizeOnStart);
+            this.groupBox1.Controls.Add(this.btnStop);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.chkStartOnBoot);
+            this.groupBox1.Controls.Add(this.lblState);
+            this.groupBox1.Controls.Add(this.btnStart);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(453, 85);
+            this.groupBox1.TabIndex = 10;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "SyncthingTray Configuration";
+            // 
+            // groupBoxSyncthing
+            // 
+            this.groupBoxSyncthing.Controls.Add(this.chkUpnp);
+            this.groupBoxSyncthing.Controls.Add(this.chkStartBrowser);
+            this.groupBoxSyncthing.Controls.Add(this.chkWebGui);
+            this.groupBoxSyncthing.Controls.Add(this.txtWebGui);
+            this.groupBoxSyncthing.Enabled = false;
+            this.groupBoxSyncthing.Location = new System.Drawing.Point(471, 12);
+            this.groupBoxSyncthing.Name = "groupBoxSyncthing";
+            this.groupBoxSyncthing.Size = new System.Drawing.Size(325, 85);
+            this.groupBoxSyncthing.TabIndex = 11;
+            this.groupBoxSyncthing.TabStop = false;
+            this.groupBoxSyncthing.Text = "Syncthing Configuration";
+            // 
+            // chkUpnp
+            // 
+            this.chkUpnp.AutoSize = true;
+            this.chkUpnp.Location = new System.Drawing.Point(130, 44);
+            this.chkUpnp.Name = "chkUpnp";
+            this.chkUpnp.Size = new System.Drawing.Size(56, 17);
+            this.chkUpnp.TabIndex = 2;
+            this.chkUpnp.Text = "UPNP";
+            this.chkUpnp.UseVisualStyleBackColor = true;
+            // 
+            // chkStartBrowser
+            // 
+            this.chkStartBrowser.AutoSize = true;
+            this.chkStartBrowser.Location = new System.Drawing.Point(6, 44);
+            this.chkStartBrowser.Name = "chkStartBrowser";
+            this.chkStartBrowser.Size = new System.Drawing.Size(108, 17);
+            this.chkStartBrowser.TabIndex = 2;
+            this.chkStartBrowser.Text = "Autostart browser";
+            this.chkStartBrowser.UseVisualStyleBackColor = true;
+            // 
+            // chkWebGui
+            // 
+            this.chkWebGui.AutoSize = true;
+            this.chkWebGui.Location = new System.Drawing.Point(6, 21);
+            this.chkWebGui.Name = "chkWebGui";
+            this.chkWebGui.Size = new System.Drawing.Size(68, 17);
+            this.chkWebGui.TabIndex = 0;
+            this.chkWebGui.Text = "WebGUI";
+            this.chkWebGui.UseVisualStyleBackColor = true;
+            this.chkWebGui.CheckedChanged += new System.EventHandler(this.chkWebGui_CheckedChanged);
+            // 
+            // txtWebGui
+            // 
+            this.txtWebGui.Location = new System.Drawing.Point(80, 19);
+            this.txtWebGui.Name = "txtWebGui";
+            this.txtWebGui.Size = new System.Drawing.Size(239, 20);
+            this.txtWebGui.TabIndex = 1;
+            this.txtWebGui.TextChanged += new System.EventHandler(this.txtPath_TextChanged);
+            // 
             // SyncthingTray
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(809, 319);
-            this.Controls.Add(this.chkMinimizeOnStart);
+            this.Controls.Add(this.groupBoxSyncthing);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBoxLog);
-            this.Controls.Add(this.btnStop);
-            this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.lblState);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.chkStartOnBoot);
-            this.Controls.Add(this.txtPath);
-            this.Controls.Add(this.btnSetPath);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SyncthingTray";
             this.Text = "SyncthingTray";
@@ -219,6 +293,10 @@
             this.Shown += new System.EventHandler(this.SyncthingTray_Shown);
             this.Resize += new System.EventHandler(this.SyncthingTray_Resize);
             this.contextMenuStrip.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBoxSyncthing.ResumeLayout(false);
+            this.groupBoxSyncthing.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -242,6 +320,12 @@
         private System.Windows.Forms.Timer timerCheckSync;
         private System.Windows.Forms.TextBox textBoxLog;
         private System.Windows.Forms.CheckBox chkMinimizeOnStart;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxSyncthing;
+        private System.Windows.Forms.CheckBox chkWebGui;
+        private System.Windows.Forms.TextBox txtWebGui;
+        private System.Windows.Forms.CheckBox chkStartBrowser;
+        private System.Windows.Forms.CheckBox chkUpnp;
     }
 }
 
