@@ -58,5 +58,17 @@ namespace SyncthingTray.Properties {
                 this["MinimizeOnStart"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/syncthing/syncthing/releases/latest")]
+        public string SyncthingReleaseUrl {
+            get {
+                return ((string)(this["SyncthingReleaseUrl"]));
+            }
+            set {
+                this["SyncthingReleaseUrl"] = value;
+            }
+        }
     }
 }

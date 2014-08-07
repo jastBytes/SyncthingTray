@@ -111,7 +111,6 @@ namespace SyncthingTray
             if (WindowState == FormWindowState.Minimized)
             {
                 this.ShowInTaskbar = false;
-                notifyIcon.ShowBalloonTip(1000, "SyncthingTray", "I'm down here if you need me...", ToolTipIcon.Info);
             }
             else
                 this.ShowInTaskbar = true;
@@ -204,6 +203,11 @@ namespace SyncthingTray
         private void chkWebGui_CheckedChanged(object sender, EventArgs e)
         {
             txtWebGui.Enabled = chkWebGui.Checked;
+        }
+
+        private void btnDownload_Click(object sender, EventArgs e)
+        {
+            Process.Start(Settings.Default.SyncthingReleaseUrl);
         }
         #endregion
 
