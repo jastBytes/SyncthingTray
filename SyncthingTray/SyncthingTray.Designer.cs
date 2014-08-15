@@ -99,7 +99,7 @@
             // 
             this.openWebinterfaceToolStripMenuItem.Name = "openWebinterfaceToolStripMenuItem";
             this.openWebinterfaceToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.openWebinterfaceToolStripMenuItem.Text = "Open Webinterface";
+            this.openWebinterfaceToolStripMenuItem.Text = "Open Web Interface";
             this.openWebinterfaceToolStripMenuItem.Click += new System.EventHandler(this.openWebinterfaceToolStripMenuItem_Click);
             // 
             // showSyncthingTraySettingsToolStripMenuItem
