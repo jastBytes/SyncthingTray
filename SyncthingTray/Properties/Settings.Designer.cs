@@ -73,13 +73,13 @@ namespace SyncthingTray.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool HideTrayNotification {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowTrayNotifications {
             get {
-                return ((bool)(this["HideTrayNotification"]));
+                return ((bool)(this["ShowTrayNotifications"]));
             }
             set {
-                this["HideTrayNotification"] = value;
+                this["ShowTrayNotifications"] = value;
             }
         }
     }

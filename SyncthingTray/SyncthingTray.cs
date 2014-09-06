@@ -99,7 +99,7 @@ namespace SyncthingTray
         void ActiveProcess_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
         {
             this.Invoke(new MethodInvoker(() => textBoxLog.AppendText(e.Data + System.Environment.NewLine)));
-            if (WindowState == FormWindowState.Minimized && !Settings.Default.HideTrayNotification)
+            if (WindowState == FormWindowState.Minimized && !Settings.Default.ShowTrayNotifications)
             {
                 this.Invoke(
                     new MethodInvoker(() => notifyIcon.ShowBalloonTip(1000, "SyncthingTray", e.Data, ToolTipIcon.Info)));
@@ -183,7 +183,7 @@ namespace SyncthingTray
         private void SyncthingTray_Load(object sender, EventArgs e)
         {
             chkMinimizeOnStart.Checked = Settings.Default.MinimizeOnStart;
-            chkHideTrayNotifications.Checked = Settings.Default.HideTrayNotification;
+            chkShowTrayNotifications.Checked = Settings.Default.ShowTrayNotifications;
             if (Settings.Default.MinimizeOnStart)
             {
                 this.WindowState = FormWindowState.Minimized;
@@ -253,7 +253,7 @@ namespace SyncthingTray
 
         private void chkHideTrayNotifications_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.HideTrayNotification = chkHideTrayNotifications.Checked;
+            Settings.Default.ShowTrayNotifications = chkShowTrayNotifications.Checked;
             Settings.Default.Save();
         }
 

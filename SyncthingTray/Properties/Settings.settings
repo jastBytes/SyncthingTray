@@ -14,8 +14,8 @@
     <Setting Name="SyncthingReleaseUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://github.com/syncthing/syncthing/releases/latest</Value>
     </Setting>
-    <Setting Name="HideTrayNotification" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="ShowTrayNotifications" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

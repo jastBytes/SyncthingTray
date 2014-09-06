@@ -47,13 +47,13 @@
             this.textBoxLog = new System.Windows.Forms.TextBox();
             this.chkMinimizeOnStart = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkShowTrayNotifications = new System.Windows.Forms.CheckBox();
             this.btnDownload = new System.Windows.Forms.Button();
             this.groupBoxSyncthing = new System.Windows.Forms.GroupBox();
             this.chkUpnp = new System.Windows.Forms.CheckBox();
             this.chkStartBrowser = new System.Windows.Forms.CheckBox();
             this.chkWebGui = new System.Windows.Forms.CheckBox();
             this.txtWebGui = new System.Windows.Forms.TextBox();
-            this.chkHideTrayNotifications = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBoxSyncthing.SuspendLayout();
@@ -210,7 +210,7 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.chkHideTrayNotifications);
+            this.groupBox1.Controls.Add(this.chkShowTrayNotifications);
             this.groupBox1.Controls.Add(this.btnDownload);
             this.groupBox1.Controls.Add(this.btnSetPath);
             this.groupBox1.Controls.Add(this.txtPath);
@@ -224,6 +224,17 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "SyncthingTray Configuration";
+            // 
+            // chkShowTrayNotifications
+            // 
+            this.chkShowTrayNotifications.AutoSize = true;
+            this.chkShowTrayNotifications.Location = new System.Drawing.Point(189, 73);
+            this.chkShowTrayNotifications.Name = "chkShowTrayNotifications";
+            this.chkShowTrayNotifications.Size = new System.Drawing.Size(138, 17);
+            this.chkShowTrayNotifications.TabIndex = 10;
+            this.chkShowTrayNotifications.Text = "&Show Tray Notifications";
+            this.chkShowTrayNotifications.UseVisualStyleBackColor = true;
+            this.chkShowTrayNotifications.CheckedChanged += new System.EventHandler(this.chkHideTrayNotifications_CheckedChanged);
             // 
             // btnDownload
             // 
@@ -288,17 +299,6 @@
             this.txtWebGui.TabIndex = 1;
             this.txtWebGui.TextChanged += new System.EventHandler(this.txtPath_TextChanged);
             // 
-            // chkHideTrayNotifications
-            // 
-            this.chkHideTrayNotifications.AutoSize = true;
-            this.chkHideTrayNotifications.Location = new System.Drawing.Point(189, 73);
-            this.chkHideTrayNotifications.Name = "chkHideTrayNotifications";
-            this.chkHideTrayNotifications.Size = new System.Drawing.Size(133, 17);
-            this.chkHideTrayNotifications.TabIndex = 10;
-            this.chkHideTrayNotifications.Text = "&Hide Tray Notifications";
-            this.chkHideTrayNotifications.UseVisualStyleBackColor = true;
-            this.chkHideTrayNotifications.CheckedChanged += new System.EventHandler(this.chkHideTrayNotifications_CheckedChanged);
-            // 
             // SyncthingTray
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,7 +351,7 @@
         private System.Windows.Forms.CheckBox chkStartBrowser;
         private System.Windows.Forms.CheckBox chkUpnp;
         private System.Windows.Forms.Button btnDownload;
-        private System.Windows.Forms.CheckBox chkHideTrayNotifications;
+        private System.Windows.Forms.CheckBox chkShowTrayNotifications;
     }
 }
 
