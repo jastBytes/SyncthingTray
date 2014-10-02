@@ -47,12 +47,13 @@
             this.textBoxLog = new System.Windows.Forms.TextBox();
             this.chkMinimizeOnStart = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkShowTrayNotifications = new System.Windows.Forms.CheckBox();
+            this.btnDownload = new System.Windows.Forms.Button();
             this.groupBoxSyncthing = new System.Windows.Forms.GroupBox();
             this.chkUpnp = new System.Windows.Forms.CheckBox();
             this.chkStartBrowser = new System.Windows.Forms.CheckBox();
             this.chkWebGui = new System.Windows.Forms.CheckBox();
             this.txtWebGui = new System.Windows.Forms.TextBox();
-            this.btnDownload = new System.Windows.Forms.Button();
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBoxSyncthing.SuspendLayout();
@@ -136,7 +137,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 101);
+            this.label1.Location = new System.Drawing.Point(15, 115);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 13);
             this.label1.TabIndex = 4;
@@ -147,7 +148,7 @@
             this.lblState.AutoSize = true;
             this.lblState.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblState.ForeColor = System.Drawing.Color.Red;
-            this.lblState.Location = new System.Drawing.Point(104, 101);
+            this.lblState.Location = new System.Drawing.Point(104, 115);
             this.lblState.Name = "lblState";
             this.lblState.Size = new System.Drawing.Size(62, 13);
             this.lblState.TabIndex = 5;
@@ -186,12 +187,12 @@
             this.textBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxLog.Location = new System.Drawing.Point(12, 117);
+            this.textBoxLog.Location = new System.Drawing.Point(12, 131);
             this.textBoxLog.Multiline = true;
             this.textBoxLog.Name = "textBoxLog";
             this.textBoxLog.ReadOnly = true;
             this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxLog.Size = new System.Drawing.Size(784, 190);
+            this.textBoxLog.Size = new System.Drawing.Size(784, 176);
             this.textBoxLog.TabIndex = 8;
             // 
             // chkMinimizeOnStart
@@ -209,6 +210,7 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.chkShowTrayNotifications);
             this.groupBox1.Controls.Add(this.btnDownload);
             this.groupBox1.Controls.Add(this.btnSetPath);
             this.groupBox1.Controls.Add(this.txtPath);
@@ -218,10 +220,31 @@
             this.groupBox1.Controls.Add(this.btnStart);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(410, 85);
+            this.groupBox1.Size = new System.Drawing.Size(410, 100);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "SyncthingTray Configuration";
+            // 
+            // chkShowTrayNotifications
+            // 
+            this.chkShowTrayNotifications.AutoSize = true;
+            this.chkShowTrayNotifications.Location = new System.Drawing.Point(189, 73);
+            this.chkShowTrayNotifications.Name = "chkShowTrayNotifications";
+            this.chkShowTrayNotifications.Size = new System.Drawing.Size(138, 17);
+            this.chkShowTrayNotifications.TabIndex = 10;
+            this.chkShowTrayNotifications.Text = "&Show Tray Notifications";
+            this.chkShowTrayNotifications.UseVisualStyleBackColor = true;
+            this.chkShowTrayNotifications.CheckedChanged += new System.EventHandler(this.chkHideTrayNotifications_CheckedChanged);
+            // 
+            // btnDownload
+            // 
+            this.btnDownload.Location = new System.Drawing.Point(6, 17);
+            this.btnDownload.Name = "btnDownload";
+            this.btnDownload.Size = new System.Drawing.Size(116, 22);
+            this.btnDownload.TabIndex = 0;
+            this.btnDownload.Text = "Get Syncthing";
+            this.btnDownload.UseVisualStyleBackColor = true;
+            this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
             // 
             // groupBoxSyncthing
             // 
@@ -232,7 +255,7 @@
             this.groupBoxSyncthing.Enabled = false;
             this.groupBoxSyncthing.Location = new System.Drawing.Point(428, 12);
             this.groupBoxSyncthing.Name = "groupBoxSyncthing";
-            this.groupBoxSyncthing.Size = new System.Drawing.Size(368, 85);
+            this.groupBoxSyncthing.Size = new System.Drawing.Size(368, 100);
             this.groupBoxSyncthing.TabIndex = 11;
             this.groupBoxSyncthing.TabStop = false;
             this.groupBoxSyncthing.Text = "Syncthing Configuration";
@@ -275,16 +298,6 @@
             this.txtWebGui.Size = new System.Drawing.Size(203, 20);
             this.txtWebGui.TabIndex = 1;
             this.txtWebGui.TextChanged += new System.EventHandler(this.txtPath_TextChanged);
-            // 
-            // btnDownload
-            // 
-            this.btnDownload.Location = new System.Drawing.Point(6, 17);
-            this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(116, 22);
-            this.btnDownload.TabIndex = 0;
-            this.btnDownload.Text = "Get Syncthing";
-            this.btnDownload.UseVisualStyleBackColor = true;
-            this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
             // 
             // SyncthingTray
             // 
@@ -338,6 +351,7 @@
         private System.Windows.Forms.CheckBox chkStartBrowser;
         private System.Windows.Forms.CheckBox chkUpnp;
         private System.Windows.Forms.Button btnDownload;
+        private System.Windows.Forms.CheckBox chkShowTrayNotifications;
     }
 }
 
