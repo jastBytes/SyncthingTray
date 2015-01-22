@@ -12,11 +12,30 @@ namespace SyncthingTray
         #region Member
         private Process _activeProcess;
         private SyncthingConfig _syncthingConfig;
+        private bool _bStartupDone = false;
         #endregion
 
         public SyncthingTray()
         {
             InitializeComponent();
+        }
+
+        protected override void OnLoad( EventArgs e ) 
+        {
+            if (!_bStartupDone)
+            {
+                _bStartupDone = true;
+
+                chkMinimizeOnStart.Checked = Settings.Default.MinimizeOnStart;
+                chkShowTrayNotifications.Checked = Settings.Default.ShowTrayNotifications;
+                if (Settings.Default.MinimizeOnStart)
+                {
+                    Visible = false; // Hide form window.
+                    ShowInTaskbar = false; // Remove from taskbar.
+                    this.WindowState = FormWindowState.Minimized;
+                }
+            }
+            base.OnLoad(e);
         }
 
         #region Events
@@ -110,21 +129,59 @@ namespace SyncthingTray
         {
             if (WindowState == FormWindowState.Minimized)
             {
-                this.ShowInTaskbar = false;
+                //this.ShowInTaskbar = false;
+                this.Hide();
             }
             else
-                this.ShowInTaskbar = true;
+            {
+                //this.ShowInTaskbar = true;
+                this.Show();
+            }
         }
 
         private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                WindowState = WindowState == FormWindowState.Normal ? FormWindowState.Minimized : FormWindowState.Normal;
+            {
+                if (WindowState == FormWindowState.Minimized)
+                {
+                    Visible = true; // Hide form window
+                    ShowInTaskbar = true; // Remove from taskbar
+
+                    this.Show();
+                    this.WindowState = FormWindowState.Normal;
+                    this.BringToFront();
+                }
+                else
+                {
+                    Visible = false; // Hide form window
+                    ShowInTaskbar = false; // Remove from taskbar
+
+                    this.Hide();
+                    this.WindowState = FormWindowState.Minimized;
+                }
+            }
         }
 
         private void showSyncthingTraySettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
+            if (WindowState == FormWindowState.Minimized)
+            {
+                Visible = true; // Hide form window
+                ShowInTaskbar = true; // Remove from taskbar
+
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                this.BringToFront();
+            }
+            else
+            {
+                Visible = false; // Hide form window
+                ShowInTaskbar = false; // Remove from taskbar
+
+                this.Hide();
+                this.WindowState = FormWindowState.Minimized;
+            }
         }
 
         private void chkMinimizeOnStart_CheckedChanged(object sender, EventArgs e)
@@ -171,22 +228,13 @@ namespace SyncthingTray
             {
                 e.Cancel = true;
                 WindowState = FormWindowState.Minimized;
+                this.Hide();
                 return;
             }
 
             if (IsSyncthingRunning())
             {
                 btnStop.PerformClick();
-            }
-        }
-
-        private void SyncthingTray_Load(object sender, EventArgs e)
-        {
-            chkMinimizeOnStart.Checked = Settings.Default.MinimizeOnStart;
-            chkShowTrayNotifications.Checked = Settings.Default.ShowTrayNotifications;
-            if (Settings.Default.MinimizeOnStart)
-            {
-                this.WindowState = FormWindowState.Minimized;
             }
         }
 
@@ -255,6 +303,11 @@ namespace SyncthingTray
         {
             Settings.Default.ShowTrayNotifications = chkShowTrayNotifications.Checked;
             Settings.Default.Save();
+        }
+
+        private void chkStartBrowser_CheckedChanged(object sender, EventArgs e)
+        {
+            _syncthingConfig.StartBrowser = chkStartBrowser.Checked;
         }
 
     }
