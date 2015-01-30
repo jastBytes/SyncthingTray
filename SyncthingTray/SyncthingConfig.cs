@@ -40,6 +40,7 @@ namespace SyncthingTray
                             break;
                         case "gui":
                             conf.GuiEnabled = Convert.ToBoolean(reader.GetAttribute("enabled"));
+                            conf.HttpsEnabled = Convert.ToBoolean(reader.GetAttribute("tls"));
                             if (reader.ReadToDescendant("address") && reader.Read())
                                 conf.GuiAddress = reader.Value;
                             break;
@@ -70,6 +71,8 @@ namespace SyncthingTray
         public string Version { get; set; }
 
         public bool GuiEnabled { get; set; }
+
+        public bool HttpsEnabled { get; set; }
 
         public string GuiAddress { get; set; }
 

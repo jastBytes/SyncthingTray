@@ -198,7 +198,7 @@ namespace SyncthingTray
 
         private void openWebinterfaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_syncthingConfig.GuiEnabled) Process.Start("http://" + _syncthingConfig.GuiAddress);
+            if (_syncthingConfig.GuiEnabled) Process.Start(_syncthingConfig.HttpsEnabled ? "https://" : "http://" + _syncthingConfig.GuiAddress);
         }
 
         private void chkWebGui_CheckedChanged(object sender, EventArgs e)
@@ -217,6 +217,7 @@ namespace SyncthingTray
             chkWebGui.Checked = _syncthingConfig.GuiEnabled;
             chkUpnp.Checked = _syncthingConfig.UpnpEnabled;
             chkStartBrowser.Checked = _syncthingConfig.StartBrowser;
+            chkHttps.Checked = _syncthingConfig.HttpsEnabled;
             txtWebGui.Text = _syncthingConfig.GuiAddress;
         }
 
@@ -256,6 +257,5 @@ namespace SyncthingTray
             Settings.Default.ShowTrayNotifications = chkShowTrayNotifications.Checked;
             Settings.Default.Save();
         }
-
     }
 }
