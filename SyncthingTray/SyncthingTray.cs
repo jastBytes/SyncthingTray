@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using log4net;
 using SyncthingTray.Properties;
 
 namespace SyncthingTray
@@ -10,19 +11,27 @@ namespace SyncthingTray
     public partial class SyncthingTray : Form
     {
         #region Member
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private Process _activeProcess;
         private SyncthingConfig _syncthingConfig;
+        private readonly GitHubHelper _gitHubHelper;
         #endregion
 
         public SyncthingTray()
         {
             InitializeComponent();
+
+            _gitHubHelper = new GitHubHelper();
+
+            SyncthingConfig.ConfigurationChanged += SyncthingConfigOnConfigurationChanged;
         }
 
         #region Events
-        void Watcher_Changed(object sender, FileSystemEventArgs e)
+        private void SyncthingConfigOnConfigurationChanged(object sender, SynchtingConfigEventArgs args)
         {
-            ReloadConfig();
+            _syncthingConfig = args.Configuration;
+            Invoke(new MethodInvoker(ReloadConfig));
         }
 
         private void btnSetPath_Click(object sender, EventArgs e)
@@ -34,16 +43,21 @@ namespace SyncthingTray
         }
         private void timerCheckSync_Tick(object sender, EventArgs e)
         {
+            CheckSyncthingStateAndUpdateUI();
+        }
+
+        private void CheckSyncthingStateAndUpdateUI()
+        {
             var isRunning = IsSyncthingRunning();
             if (isRunning)
             {
-                lblState.Text = "Running";
+                lblState.Text = strings.Running;
                 lblState.ForeColor = Color.Green;
                 notifyIcon.Icon = Resources.logo_64;
             }
             else
             {
-                lblState.Text = "Not running";
+                lblState.Text = strings.NotRunning;
                 lblState.ForeColor = Color.OrangeRed;
                 notifyIcon.Icon = Resources.logo_64_grayscale;
             }
@@ -60,20 +74,12 @@ namespace SyncthingTray
         {
             try
             {
-                if (_activeProcess != null)
-                {
-                    _activeProcess.OutputDataReceived -= ActiveProcess_OutputDataReceived;
-                    _activeProcess.ErrorDataReceived -= ActiveProcess_OutputDataReceived;
-                    _activeProcess.Kill();
-                    _activeProcess = null;
-                }
-                else
-                {
-                    ProcessHelper.StopProcess("syncthing");
-                }
+                _activeProcess.Close();
+                CheckSyncthingStateAndUpdateUI();
             }
             catch (Exception ex)
             {
+                Log.Error(ex.ToString());
                 MessageBox.Show(ex.Message);
             }
         }
@@ -89,6 +95,8 @@ namespace SyncthingTray
                 _activeProcess.ErrorDataReceived += ActiveProcess_OutputDataReceived;
                 _activeProcess.BeginOutputReadLine();
                 _activeProcess.BeginErrorReadLine();
+                _activeProcess.Exited += _activeProcess_Exited;
+                _activeProcess.EnableRaisingEvents = true;
             }
             catch (Exception ex)
             {
@@ -96,13 +104,20 @@ namespace SyncthingTray
             }
         }
 
-        void ActiveProcess_OutputDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
+        void _activeProcess_Exited(object sender, EventArgs e)
         {
-            this.Invoke(new MethodInvoker(() => textBoxLog.AppendText(e.Data + System.Environment.NewLine)));
+            _activeProcess.OutputDataReceived -= ActiveProcess_OutputDataReceived;
+            _activeProcess.ErrorDataReceived -= ActiveProcess_OutputDataReceived;
+            _activeProcess = null;
+            CheckSyncthingStateAndUpdateUI();
+        }
+
+        void ActiveProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Invoke(new MethodInvoker(() => textBoxLog.AppendText(e.Data + Environment.NewLine)));
             if (WindowState == FormWindowState.Minimized && !Settings.Default.ShowTrayNotifications)
             {
-                this.Invoke(
-                    new MethodInvoker(() => notifyIcon.ShowBalloonTip(1000, "SyncthingTray", e.Data, ToolTipIcon.Info)));
+                Invoke(new MethodInvoker(() => notifyIcon.ShowBalloonTip(1000, Settings.Default.ApplicationName, e.Data, ToolTipIcon.Info)));
             }
         }
 
@@ -163,6 +178,32 @@ namespace SyncthingTray
             {
                 btnStart.PerformClick();
             }
+            else if (!btnStart.Enabled)
+            {
+                var expectedPath =
+                    Path.Combine(
+                        Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "syncthing"),
+                        "syncthing.exe");
+                try
+                {
+                    if (!File.Exists(expectedPath))
+                    {
+                        _gitHubHelper.GetLatestVersion();
+                    }
+                    else
+                    {
+                        Settings.Default.SyncthingPath = expectedPath;
+                        Settings.Default.Save();
+                    }
+                    txtPath.Text = Settings.Default.SyncthingPath;
+                    CheckPath(txtPath.Text.Trim());
+                }
+                catch (Exception ex)
+                {
+                    textBoxLog.AppendText(ex.ToString());
+                    Log.Error(ex.ToString());
+                }
+            }
         }
 
         private void SyncthingTray_FormClosing(object sender, FormClosingEventArgs e)
@@ -198,26 +239,24 @@ namespace SyncthingTray
 
         private void openWebinterfaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_syncthingConfig.GuiEnabled) Process.Start("http://" + _syncthingConfig.GuiAddress);
+            if (_syncthingConfig.gui.enabled && IsSyncthingRunning() && !string.IsNullOrEmpty(_syncthingConfig.gui.address)) Process.Start(string.Format("{0}{1}", _syncthingConfig.gui.tls ? "https://" : "http://", _syncthingConfig.gui.address));
         }
 
         private void chkWebGui_CheckedChanged(object sender, EventArgs e)
         {
             txtWebGui.Enabled = chkWebGui.Checked;
         }
-
-        private void btnDownload_Click(object sender, EventArgs e)
-        {
-            Process.Start(Settings.Default.SyncthingReleaseUrl);
-        }
         #endregion
 
         private void ReloadConfig()
         {
-            chkWebGui.Checked = _syncthingConfig.GuiEnabled;
-            chkUpnp.Checked = _syncthingConfig.UpnpEnabled;
-            chkStartBrowser.Checked = _syncthingConfig.StartBrowser;
-            txtWebGui.Text = _syncthingConfig.GuiAddress;
+            groupBoxSyncthing.Enabled = false;
+            if (_syncthingConfig == null) return;
+            chkWebGui.Checked = _syncthingConfig.gui.enabled;
+            chkUpnp.Checked = _syncthingConfig.options.upnpEnabled;
+            chkStartBrowser.Checked = _syncthingConfig.options.startBrowser;
+            txtWebGui.Text = string.Format("{0}{1}", _syncthingConfig.gui.tls ? "https://" : "http://", _syncthingConfig.gui.address);
+            groupBoxSyncthing.Enabled = true;
         }
 
         private void CheckPath(string syncthingPath)
@@ -238,23 +277,23 @@ namespace SyncthingTray
             timerCheckSync.Enabled = true;
 
             _syncthingConfig = SyncthingConfig.Load();
-            if (_syncthingConfig != null)
-            {
-                _syncthingConfig.Watcher.Changed += Watcher_Changed;
-                ReloadConfig();
-                groupBoxSyncthing.Enabled = true;
-            }
+            ReloadConfig();
         }
 
-        public static bool IsSyncthingRunning()
+        public bool IsSyncthingRunning()
         {
-            return ProcessHelper.IsProcessOpen("syncthing");
+            return _activeProcess != null && !_activeProcess.HasExited;
         }
 
         private void chkHideTrayNotifications_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.ShowTrayNotifications = chkShowTrayNotifications.Checked;
             Settings.Default.Save();
+        }
+
+        private void checkBoxUseSpecificVersion_CheckedChanged(object sender, EventArgs e)
+        {
+            btnSetPath.Enabled = checkBoxUseSpecificVersion.Checked;
         }
 
     }

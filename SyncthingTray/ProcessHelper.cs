@@ -29,7 +29,7 @@ namespace SyncthingTray
             return Process.Start(startInfo);
         }
 
-        public static void StopProcess(string name)
+        public static void StopProcessByName(string name)
         {
             foreach (var proc in Process.GetProcessesByName(name))
             {

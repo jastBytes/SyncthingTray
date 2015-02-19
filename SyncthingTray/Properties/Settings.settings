@@ -17,5 +17,14 @@
     <Setting Name="ShowTrayNotifications" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="GitHubIssueUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://github.com/iss0/SyncthingTray/issues</Value>
+    </Setting>
+    <Setting Name="ApplicationName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SyncthingTray</Value>
+    </Setting>
+    <Setting Name="SyncthingConfigFileName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">config.xml</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
