@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,8 @@ namespace SyncthingTray
     {
         public static bool IsProcessOpen(string name)
         {
-            return Process.GetProcesses().Any(clsProcess => clsProcess.ProcessName.Contains(name));
+            var process = Process.GetProcesses().FirstOrDefault(clsProcess => clsProcess.ProcessName.Contains(Path.GetFileNameWithoutExtension(name)));
+            return process != null && process.MainModule.FileName == name;
         }
 
         public static Process StartProcess(string path)

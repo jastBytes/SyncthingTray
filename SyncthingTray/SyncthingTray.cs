@@ -27,7 +27,7 @@ namespace SyncthingTray
             SyncthingConfig.ConfigurationChanged += SyncthingConfigOnConfigurationChanged;
         }
 
-        protected override void OnLoad( EventArgs e ) 
+        protected override void OnLoad(EventArgs e)
         {
             chkMinimizeOnStart.Checked = Settings.Default.MinimizeOnStart;
             chkShowTrayNotifications.Checked = Settings.Default.ShowTrayNotifications;
@@ -89,7 +89,11 @@ namespace SyncthingTray
         {
             try
             {
-                _activeProcess.Close();
+                if (!string.IsNullOrEmpty(Settings.Default.SyncthingPath))
+                {
+                    ProcessHelper.StopProcessByName(Path.GetFileNameWithoutExtension(Settings.Default.SyncthingPath));
+                    _activeProcess = null;
+                }
                 CheckSyncthingStateAndUpdateUI();
             }
             catch (Exception ex)
@@ -121,10 +125,14 @@ namespace SyncthingTray
 
         void _activeProcess_Exited(object sender, EventArgs e)
         {
-            _activeProcess.OutputDataReceived -= ActiveProcess_OutputDataReceived;
-            _activeProcess.ErrorDataReceived -= ActiveProcess_OutputDataReceived;
-            _activeProcess = null;
-            CheckSyncthingStateAndUpdateUI();
+            if (_activeProcess != null)
+            {
+                _activeProcess.OutputDataReceived -= ActiveProcess_OutputDataReceived;
+                _activeProcess.ErrorDataReceived -= ActiveProcess_OutputDataReceived;
+                _activeProcess.Exited -= _activeProcess_Exited;
+                _activeProcess = null;
+            }
+            Invoke(new MethodInvoker(CheckSyncthingStateAndUpdateUI));
         }
 
         void ActiveProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)
@@ -140,7 +148,7 @@ namespace SyncthingTray
         {
             if (WindowState == FormWindowState.Minimized)
                 switchToTray(true);
-            }
+        }
 
         private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
@@ -148,9 +156,9 @@ namespace SyncthingTray
             {
                 if (WindowState == FormWindowState.Minimized)
                     switchToTray(false);
-            else
+                else
                     switchToTray(true);
-        }
+            }
         }
 
         private void switchToTray(bool bHide)
@@ -162,7 +170,7 @@ namespace SyncthingTray
                 BringToFront();
             }
             else
-        {
+            {
                 Hide();
                 WindowState = FormWindowState.Minimized;
             }
@@ -236,7 +244,7 @@ namespace SyncthingTray
                 {
                     textBoxLog.AppendText(ex.ToString());
                     Log.Error(ex.ToString());
-        }
+                }
             }
         }
 
@@ -302,12 +310,12 @@ namespace SyncthingTray
             timerCheckSync.Enabled = true;
 
             _syncthingConfig = SyncthingConfig.Load();
-                ReloadConfig();
+            ReloadConfig();
         }
 
         public bool IsSyncthingRunning()
         {
-            return _activeProcess != null && !_activeProcess.HasExited;
+            return _activeProcess != null || (!string.IsNullOrEmpty(Settings.Default.SyncthingPath) && ProcessHelper.IsProcessOpen(Settings.Default.SyncthingPath));
         }
 
         private void chkHideTrayNotifications_CheckedChanged(object sender, EventArgs e)
@@ -320,6 +328,5 @@ namespace SyncthingTray
         {
             btnSetPath.Enabled = checkBoxUseSpecificVersion.Checked;
         }
-
     }
 }

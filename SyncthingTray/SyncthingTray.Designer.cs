@@ -49,13 +49,13 @@ namespace SyncthingTray
             this.textBoxLog = new System.Windows.Forms.TextBox();
             this.chkMinimizeOnStart = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxUseSpecificVersion = new System.Windows.Forms.CheckBox();
             this.chkShowTrayNotifications = new System.Windows.Forms.CheckBox();
             this.groupBoxSyncthing = new System.Windows.Forms.GroupBox();
             this.chkUpnp = new System.Windows.Forms.CheckBox();
             this.chkStartBrowser = new System.Windows.Forms.CheckBox();
             this.chkWebGui = new System.Windows.Forms.CheckBox();
             this.txtWebGui = new System.Windows.Forms.TextBox();
-            this.checkBoxUseSpecificVersion = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBoxSyncthing.SuspendLayout();
@@ -229,6 +229,17 @@ namespace SyncthingTray
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "SyncthingTray Configuration";
             // 
+            // checkBoxUseSpecificVersion
+            // 
+            this.checkBoxUseSpecificVersion.AutoSize = true;
+            this.checkBoxUseSpecificVersion.Location = new System.Drawing.Point(7, 84);
+            this.checkBoxUseSpecificVersion.Name = "checkBoxUseSpecificVersion";
+            this.checkBoxUseSpecificVersion.Size = new System.Drawing.Size(121, 17);
+            this.checkBoxUseSpecificVersion.TabIndex = 11;
+            this.checkBoxUseSpecificVersion.Text = "Use specific version";
+            this.checkBoxUseSpecificVersion.UseVisualStyleBackColor = true;
+            this.checkBoxUseSpecificVersion.CheckedChanged += new System.EventHandler(this.checkBoxUseSpecificVersion_CheckedChanged);
+            // 
             // chkShowTrayNotifications
             // 
             this.chkShowTrayNotifications.AutoSize = true;
@@ -273,7 +284,6 @@ namespace SyncthingTray
             this.chkStartBrowser.TabIndex = 2;
             this.chkStartBrowser.Text = "Autostart browser";
             this.chkStartBrowser.UseVisualStyleBackColor = true;
-            this.chkStartBrowser.CheckedChanged += new System.EventHandler(this.chkStartBrowser_CheckedChanged);
             // 
             // chkWebGui
             // 
@@ -293,17 +303,6 @@ namespace SyncthingTray
             this.txtWebGui.Size = new System.Drawing.Size(203, 20);
             this.txtWebGui.TabIndex = 1;
             this.txtWebGui.TextChanged += new System.EventHandler(this.txtPath_TextChanged);
-            // 
-            // checkBoxUseSpecificVersion
-            // 
-            this.checkBoxUseSpecificVersion.AutoSize = true;
-            this.checkBoxUseSpecificVersion.Location = new System.Drawing.Point(7, 84);
-            this.checkBoxUseSpecificVersion.Name = "checkBoxUseSpecificVersion";
-            this.checkBoxUseSpecificVersion.Size = new System.Drawing.Size(121, 17);
-            this.checkBoxUseSpecificVersion.TabIndex = 11;
-            this.checkBoxUseSpecificVersion.Text = "Use specific version";
-            this.checkBoxUseSpecificVersion.UseVisualStyleBackColor = true;
-            this.checkBoxUseSpecificVersion.CheckedChanged += new System.EventHandler(this.checkBoxUseSpecificVersion_CheckedChanged);
             // 
             // SyncthingTray
             // 
