@@ -27,6 +27,20 @@ namespace SyncthingTray
             SyncthingConfig.ConfigurationChanged += SyncthingConfigOnConfigurationChanged;
         }
 
+        protected override void OnLoad( EventArgs e ) 
+        {
+            chkMinimizeOnStart.Checked = Settings.Default.MinimizeOnStart;
+            chkShowTrayNotifications.Checked = Settings.Default.ShowTrayNotifications;
+            if (Settings.Default.MinimizeOnStart)
+            {
+                Hide();
+                Visible = false; // Hide form window
+                ShowInTaskbar = false; // Remove from taskbar
+                WindowState = FormWindowState.Minimized;
+            }
+            base.OnLoad(e);
+        }
+
         #region Events
         private void SyncthingConfigOnConfigurationChanged(object sender, SynchtingConfigEventArgs args)
         {
@@ -41,6 +55,7 @@ namespace SyncthingTray
             var fileName = openFileDialog.FileName.Trim();
             CheckPath(fileName);
         }
+
         private void timerCheckSync_Tick(object sender, EventArgs e)
         {
             CheckSyncthingStateAndUpdateUI();
@@ -124,22 +139,41 @@ namespace SyncthingTray
         private void SyncthingTray_Resize(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Minimized)
-            {
-                this.ShowInTaskbar = false;
+                switchToTray(true);
             }
-            else
-                this.ShowInTaskbar = true;
-        }
 
         private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                WindowState = WindowState == FormWindowState.Normal ? FormWindowState.Minimized : FormWindowState.Normal;
+            {
+                if (WindowState == FormWindowState.Minimized)
+                    switchToTray(false);
+            else
+                    switchToTray(true);
+        }
+        }
+
+        private void switchToTray(bool bHide)
+        {
+            if (!bHide)
+            {
+                Show();
+                WindowState = FormWindowState.Normal;
+                BringToFront();
+            }
+            else
+        {
+                Hide();
+                WindowState = FormWindowState.Minimized;
+            }
         }
 
         private void showSyncthingTraySettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
+            if (WindowState == FormWindowState.Minimized)
+                switchToTray(false);
+            else
+                switchToTray(true);
         }
 
         private void chkMinimizeOnStart_CheckedChanged(object sender, EventArgs e)
@@ -202,7 +236,7 @@ namespace SyncthingTray
                 {
                     textBoxLog.AppendText(ex.ToString());
                     Log.Error(ex.ToString());
-                }
+        }
             }
         }
 
@@ -212,22 +246,13 @@ namespace SyncthingTray
             {
                 e.Cancel = true;
                 WindowState = FormWindowState.Minimized;
+                this.Hide();
                 return;
             }
 
             if (IsSyncthingRunning())
             {
                 btnStop.PerformClick();
-            }
-        }
-
-        private void SyncthingTray_Load(object sender, EventArgs e)
-        {
-            chkMinimizeOnStart.Checked = Settings.Default.MinimizeOnStart;
-            chkShowTrayNotifications.Checked = Settings.Default.ShowTrayNotifications;
-            if (Settings.Default.MinimizeOnStart)
-            {
-                this.WindowState = FormWindowState.Minimized;
             }
         }
 
@@ -277,7 +302,7 @@ namespace SyncthingTray
             timerCheckSync.Enabled = true;
 
             _syncthingConfig = SyncthingConfig.Load();
-            ReloadConfig();
+                ReloadConfig();
         }
 
         public bool IsSyncthingRunning()
