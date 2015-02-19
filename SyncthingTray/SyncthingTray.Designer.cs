@@ -279,6 +279,7 @@
             this.chkStartBrowser.TabIndex = 2;
             this.chkStartBrowser.Text = "Autostart browser";
             this.chkStartBrowser.UseVisualStyleBackColor = true;
+            this.chkStartBrowser.CheckedChanged += new System.EventHandler(this.chkStartBrowser_CheckedChanged);
             // 
             // chkWebGui
             // 
@@ -313,7 +314,6 @@
             this.Name = "SyncthingTray";
             this.Text = "SyncthingTray";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SyncthingTray_FormClosing);
-            this.Load += new System.EventHandler(this.SyncthingTray_Load);
             this.Shown += new System.EventHandler(this.SyncthingTray_Shown);
             this.Resize += new System.EventHandler(this.SyncthingTray_Resize);
             this.contextMenuStrip.ResumeLayout(false);
