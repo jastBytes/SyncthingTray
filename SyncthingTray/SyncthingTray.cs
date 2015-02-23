@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using log4net;
+using SyncthingTray.External;
 using SyncthingTray.Properties;
 
 namespace SyncthingTray
@@ -14,7 +15,7 @@ namespace SyncthingTray
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private Process _activeProcess;
-        private SyncthingConfig _syncthingConfig;
+        private configuration _syncthingConfig;
         private readonly GitHubHelper _gitHubHelper;
         #endregion
 
@@ -24,7 +25,7 @@ namespace SyncthingTray
 
             _gitHubHelper = new GitHubHelper();
 
-            SyncthingConfig.ConfigurationChanged += SyncthingConfigOnConfigurationChanged;
+            configuration.ConfigurationChanged += SyncthingConfigOnConfigurationChanged;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -42,7 +43,7 @@ namespace SyncthingTray
         }
 
         #region Events
-        private void SyncthingConfigOnConfigurationChanged(object sender, SynchtingConfigEventArgs args)
+        private void SyncthingConfigOnConfigurationChanged(object sender, SyncthingConfigEventArgs args)
         {
             _syncthingConfig = args.Configuration;
             Invoke(new MethodInvoker(ReloadConfig));
@@ -254,7 +255,7 @@ namespace SyncthingTray
             {
                 e.Cancel = true;
                 WindowState = FormWindowState.Minimized;
-                this.Hide();
+                Hide();
                 return;
             }
 
@@ -266,8 +267,8 @@ namespace SyncthingTray
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
-            this.Close();
+            WindowState = FormWindowState.Minimized;
+            Close();
         }
 
         private void openWebinterfaceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -309,7 +310,7 @@ namespace SyncthingTray
             btnStop.Enabled = isRunning;
             timerCheckSync.Enabled = true;
 
-            _syncthingConfig = SyncthingConfig.Load();
+            _syncthingConfig = configuration.Load();
             ReloadConfig();
         }
 

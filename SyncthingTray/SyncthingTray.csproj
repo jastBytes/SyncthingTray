@@ -137,6 +137,9 @@
     <Compile Include="Dialogs\PendingActivityDialog.designer.cs">
       <DependentUpon>PendingActivityDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="External\SyncthingConfig.designer.cs">
+      <DependentUpon>SyncthingConfig.xsd</DependentUpon>
+    </Compile>
     <Compile Include="GitHubHelper.cs" />
     <Compile Include="ProcessHelper.cs" />
     <Compile Include="RegistryHelper.cs" />
@@ -145,7 +148,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="SyncthingConfig.cs" />
+    <Compile Include="External\SyncthingConfig.cs" >
+	<DependentUpon>SyncthingConfig.xsd</DependentUpon>
+	</Compile>
     <Compile Include="SyncthingTray.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +179,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="External\GenerateSyncthingConfigClass.cmd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -184,12 +190,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="External\SyncthingConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="logo-64-grayscale.ico" />
+    <Content Include="External\Xsd2Code.Addin.dll" />
+    <Content Include="External\Xsd2Code.exe" />
+    <Content Include="External\Xsd2Code.Library.Dll" />
     <Content Include="logo-64.ico" />
   </ItemGroup>
   <ItemGroup />

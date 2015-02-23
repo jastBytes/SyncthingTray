@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="SyncThingConfig"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="configuration">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="device" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="address"/>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="id" use="optional"/>
+            <xs:attribute type="xs:string" name="name" use="optional"/>
+            <xs:attribute type="xs:string" name="compression" use="optional"/>
+            <xs:attribute type="xs:string" name="introducer" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="gui">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="address"/>
+              <xs:element type="xs:string" name="apikey"/>
+            </xs:sequence>
+            <xs:attribute type="xs:boolean" name="enabled"/>
+            <xs:attribute type="xs:boolean" name="tls"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="options">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="listenAddress"/>
+              <xs:element type="xs:string" name="globalAnnounceServer"/>
+              <xs:element type="xs:boolean" name="globalAnnounceEnabled"/>
+              <xs:element type="xs:boolean" name="localAnnounceEnabled"/>
+              <xs:element type="xs:int" name="localAnnouncePort"/>
+              <xs:element type="xs:string" name="localAnnounceMCAddr"/>
+              <xs:element type="xs:int" name="maxSendKbps"/>
+              <xs:element type="xs:int" name="maxRecvKbps"/>
+              <xs:element type="xs:int" name="reconnectionIntervalS"/>
+              <xs:element type="xs:boolean" name="startBrowser"/>
+              <xs:element type="xs:boolean" name="upnpEnabled"/>
+              <xs:element type="xs:int" name="upnpLeaseMinutes"/>
+              <xs:element type="xs:int" name="upnpRenewalMinutes"/>
+              <xs:element type="xs:int" name="urAccepted"/>
+              <xs:element type="xs:string" name="urUniqueID"/>
+              <xs:element type="xs:boolean" name="restartOnWakeup"/>
+              <xs:element type="xs:int" name="autoUpgradeIntervalH"/>
+              <xs:element type="xs:int" name="keepTemporariesH"/>
+              <xs:element type="xs:boolean" name="cacheIgnoredFiles"/>
+              <xs:element type="xs:int" name="progressUpdateIntervalS"/>
+              <xs:element type="xs:boolean" name="symlinksEnabled"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute type="xs:int" name="version"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
