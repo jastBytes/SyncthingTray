@@ -706,7 +706,7 @@ namespace SyncthingTray.External {
         
         private string listenAddressField;
         
-        private string globalAnnounceServerField;
+        private List<string> globalAnnounceServerField;
         
         private bool globalAnnounceEnabledField;
         
@@ -748,6 +748,10 @@ namespace SyncthingTray.External {
         
         private static System.Xml.Serialization.XmlSerializer serializer;
         
+        public configurationOptions() {
+            this.globalAnnounceServerField = new List<string>();
+        }
+        
         public string listenAddress {
             get {
                 return this.listenAddressField;
@@ -757,7 +761,7 @@ namespace SyncthingTray.External {
             }
         }
         
-        public string globalAnnounceServer {
+        public List<string> globalAnnounceServer {
             get {
                 return this.globalAnnounceServerField;
             }

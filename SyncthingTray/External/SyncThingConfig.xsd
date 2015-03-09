@@ -31,7 +31,7 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element type="xs:string" name="listenAddress"/>
-              <xs:element type="xs:string" name="globalAnnounceServer"/>
+              <xs:element type="xs:string" name="globalAnnounceServer" maxOccurs="2" />
               <xs:element type="xs:boolean" name="globalAnnounceEnabled"/>
               <xs:element type="xs:boolean" name="localAnnounceEnabled"/>
               <xs:element type="xs:int" name="localAnnouncePort"/>
