@@ -148,9 +148,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="External\SyncthingConfig.cs" >
-	<DependentUpon>SyncthingConfig.xsd</DependentUpon>
-	</Compile>
+    <Compile Include="External\SyncthingConfig.cs">
+      <DependentUpon>SyncthingConfig.xsd</DependentUpon>
+    </Compile>
     <Compile Include="SyncthingTray.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -199,6 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="logo-64-grayscale.ico" />
+    <Content Include="External\SyncthingConfig.xml" />
     <Content Include="External\Xsd2Code.Addin.dll" />
     <Content Include="External\Xsd2Code.exe" />
     <Content Include="External\Xsd2Code.Library.Dll" />

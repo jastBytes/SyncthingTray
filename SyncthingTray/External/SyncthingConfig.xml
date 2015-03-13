@@ -1,0 +1,36 @@
+﻿<configuration version="8">
+  <device id="V7HCVAK-V7HCVAK-V7HCVAK-KT4ICS5-KT4ICS5-KT4ICS5-KT4ICS5" name="stef" compression="true" introducer="false">
+    <address>dynamic</address>
+  </device>
+  <device id="RCVHQYS-RCVHQYS-RCVHQYS-RCVHQYS-VZPPVG3-VZPPVG3-VZPPVG3" name="pc" compression="false" introducer="false">
+    <address>dynamic</address>
+  </device>
+  <gui enabled="true" tls="false">
+    <address>127.0.0.1:8080</address>
+    <apikey>12340ghky16Wo7IktP2xpgsNiGPAabcd</apikey>
+  </gui>
+  <options>
+    <listenAddress>0.0.0.0:22000</listenAddress>
+    <globalAnnounceServer>udp4://announce.syncthing.net:22026</globalAnnounceServer>
+    <globalAnnounceServer>udp6://announce-v6.syncthing.net:22026</globalAnnounceServer>
+    <globalAnnounceEnabled>true</globalAnnounceEnabled>
+    <localAnnounceEnabled>true</localAnnounceEnabled>
+    <localAnnouncePort>21025</localAnnouncePort>
+    <localAnnounceMCAddr>[ff32::5222]:21026</localAnnounceMCAddr>
+    <maxSendKbps>0</maxSendKbps>
+    <maxRecvKbps>0</maxRecvKbps>
+    <reconnectionIntervalS>60</reconnectionIntervalS>
+    <startBrowser>false</startBrowser>
+    <upnpEnabled>true</upnpEnabled>
+    <upnpLeaseMinutes>0</upnpLeaseMinutes>
+    <upnpRenewalMinutes>30</upnpRenewalMinutes>
+    <urAccepted>-1</urAccepted>
+    <urUniqueID></urUniqueID>
+    <restartOnWakeup>true</restartOnWakeup>
+    <autoUpgradeIntervalH>12</autoUpgradeIntervalH>
+    <keepTemporariesH>24</keepTemporariesH>
+    <cacheIgnoredFiles>true</cacheIgnoredFiles>
+    <progressUpdateIntervalS>5</progressUpdateIntervalS>
+    <symlinksEnabled>true</symlinksEnabled>
+  </options>
+</configuration>
