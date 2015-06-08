@@ -13,7 +13,9 @@ namespace SyncthingTray.External
 
         static configuration()
         {
-            Watcher = new FileSystemWatcher(Path.GetDirectoryName(ConfigPath))
+            var DirectoryPath = Path.GetDirectoryName(ConfigPath);
+            Directory.CreateDirectory(DirectoryPath);
+            Watcher = new FileSystemWatcher(DirectoryPath)
             {
                 Filter = Path.GetFileName(ConfigPath)
             };
@@ -32,13 +34,13 @@ namespace SyncthingTray.External
                 var syncthingXmlPath =
                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Syncthing",
                         Settings.Default.SyncthingConfigFileName);
-                return File.Exists(syncthingXmlPath) ? syncthingXmlPath : null;
+                return syncthingXmlPath;
             }
         }
 
         public static configuration Load()
         {
-            return string.IsNullOrEmpty(ConfigPath) ? null : ReadConfig();
+            return File.Exists(ConfigPath) ? ReadConfig() : null;
         }
 
         private static void ConfigChanged(object sender, FileSystemEventArgs e)
