@@ -56,6 +56,7 @@ namespace SyncthingTray
             this.chkStartBrowser = new System.Windows.Forms.CheckBox();
             this.chkWebGui = new System.Windows.Forms.CheckBox();
             this.txtWebGui = new System.Windows.Forms.TextBox();
+            this.chkHttps = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBoxSyncthing.SuspendLayout();
@@ -253,6 +254,7 @@ namespace SyncthingTray
             // 
             // groupBoxSyncthing
             // 
+            this.groupBoxSyncthing.Controls.Add(this.chkHttps);
             this.groupBoxSyncthing.Controls.Add(this.chkUpnp);
             this.groupBoxSyncthing.Controls.Add(this.chkStartBrowser);
             this.groupBoxSyncthing.Controls.Add(this.chkWebGui);
@@ -298,11 +300,21 @@ namespace SyncthingTray
             // 
             // txtWebGui
             // 
-            this.txtWebGui.Location = new System.Drawing.Point(80, 19);
+            this.txtWebGui.Location = new System.Drawing.Point(143, 18);
             this.txtWebGui.Name = "txtWebGui";
-            this.txtWebGui.Size = new System.Drawing.Size(203, 20);
+            this.txtWebGui.Size = new System.Drawing.Size(219, 20);
             this.txtWebGui.TabIndex = 1;
             this.txtWebGui.TextChanged += new System.EventHandler(this.txtPath_TextChanged);
+            // 
+            // chkHttps
+            // 
+            this.chkHttps.AutoSize = true;
+            this.chkHttps.Location = new System.Drawing.Point(80, 20);
+            this.chkHttps.Name = "chkHttps";
+            this.chkHttps.Size = new System.Drawing.Size(57, 17);
+            this.chkHttps.TabIndex = 3;
+            this.chkHttps.Text = "Https?";
+            this.chkHttps.UseVisualStyleBackColor = true;
             // 
             // SyncthingTray
             // 
@@ -355,6 +367,7 @@ namespace SyncthingTray
         private System.Windows.Forms.CheckBox chkStartBrowser;
         private System.Windows.Forms.CheckBox chkUpnp;
         private System.Windows.Forms.CheckBox chkShowTrayNotifications;
+        private System.Windows.Forms.CheckBox chkHttps;
         private System.Windows.Forms.CheckBox checkBoxUseSpecificVersion;
     }
 }
