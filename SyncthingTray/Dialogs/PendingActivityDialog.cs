@@ -46,10 +46,7 @@ namespace SyncthingTray.Dialogs
             }
         }
 
-        public BackgroundWorker BackgroundWorker
-        {
-            get { return backgroundWorker; }
-        }
+        public BackgroundWorker BackgroundWorker => backgroundWorker;
 
         private bool _cancellationPending;
 

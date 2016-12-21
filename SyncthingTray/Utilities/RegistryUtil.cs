@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
-namespace SyncthingTray
+namespace SyncthingTray.Utilities
 {
-    public static class RegistryHelper
+    public static class RegistryUtil
     {
         private const string RegistryRun = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
 
@@ -15,7 +15,7 @@ namespace SyncthingTray
 
             if (rk == null) throw new ArgumentException("Couldn't get write access to registry.");
             if (value)
-                rk.SetValue(Application.ProductName, string.Format("\"{0}\"", Application.ExecutablePath));
+                rk.SetValue(Application.ProductName, Application.ExecutablePath);
             else
                 rk.DeleteValue(Application.ProductName, false);
 
@@ -27,7 +27,7 @@ namespace SyncthingTray
                 (RegistryRun, false);
 
             if (rk == null) throw new ArgumentException("Couldn't get read access to registry.");
-            return !string.IsNullOrEmpty(rk.GetValue(Application.ProductName, "").ToString());
+            return !string.IsNullOrEmpty(rk.GetValue(Application.ProductName, string.Empty).ToString());
         }
     }
 }

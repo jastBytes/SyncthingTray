@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MainFatalError" xml:space="preserve">
+    <value>An fatal error occurred: '{0}'
+
+If this error persists, please report it at '{1}'.</value>
+  </data>
   <data name="NotRunning" xml:space="preserve">
     <value>Not Running</value>
   </data>

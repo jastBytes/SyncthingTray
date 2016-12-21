@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SyncthingTray
+namespace SyncthingTray.Utilities
 {
-    public static class ProcessHelper
+    public static class ProcessUtil
     {
         public static bool IsProcessOpen(string name)
         {
-            var process = Process.GetProcesses().FirstOrDefault(clsProcess => clsProcess.ProcessName.Contains(Path.GetFileNameWithoutExtension(name)));
+            var fileName = Path.GetFileNameWithoutExtension(name);
+            if (string.IsNullOrEmpty(fileName)) return false;
+
+            var process = Process.GetProcesses().FirstOrDefault(clsProcess => clsProcess.ProcessName.Contains(fileName));
             return process != null && process.MainModule.FileName == name;
         }
 

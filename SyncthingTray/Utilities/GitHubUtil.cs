@@ -1,37 +1,34 @@
-﻿using System;
+﻿using Octokit;
+using SyncthingTray.Dialogs;
+using SyncthingTray.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Octokit;
-using SyncthingTray.Dialogs;
-using SyncthingTray.Properties;
 
-namespace SyncthingTray
+namespace SyncthingTray.Utilities
 {
-    public class GitHubHelper
+    public class GitHubUtil
     {
         private readonly GitHubClient _githubClient;
 
         public delegate void LatestVersionRetrievedEventHandler(object sender, LatestVersionRetrievedEventArgs args);
         public event LatestVersionRetrievedEventHandler LatestVersionRetrievedEvent;
 
-        public GitHubHelper()
+        public GitHubUtil()
         {
             _githubClient = new GitHubClient(new ProductHeaderValue("SyncthingTray"));
         }
 
-        async public void GetLatestVersionAsync()
+        public async void GetLatestVersionAsync()
         {
             var repos = await _githubClient.Release.GetAll("syncthing", "syncthing");
             var latest = await _githubClient.Release.GetAssets("syncthing", "syncthing", repos[0].Id);
 
-            LatestVersionRetrievedEvent(this, GrabVersions(latest, repos[0]));
+            LatestVersionRetrievedEvent?.Invoke(this, GrabVersions(latest, repos[0]));
         }
 
         public void GetLatestVersion()
@@ -47,14 +44,21 @@ namespace SyncthingTray
                 paDialog.BackgroundWorker.ReportProgress(0, "Checking for latest version...");
 
                 var repos = _githubClient.Release.GetAll("syncthing", "syncthing").Result;
-                var latest = _githubClient.Release.GetAssets("syncthing", "syncthing", repos[0].Id).Result;
-                var parse = GrabVersions(latest, repos[0]);
-                var asset = Environment.Is64BitOperatingSystem ? parse.LatestAmd64 : parse.LatestIntel386;
+                var repoIndex = 0;
+                ReleaseAsset asset = null;
 
-                paDialog.BackgroundWorker.ReportProgress(0, string.Format("Downloading {0}...", asset.Name));
+                while (asset == null && repoIndex < repos.Count)
+                {
+                    var latest = _githubClient.Release.GetAssets("syncthing", "syncthing", repos[0].Id).Result;
+                    var versions = GrabVersions(latest, repos[0]);
+                    asset = Environment.Is64BitOperatingSystem ? versions.LatestAmd64 : versions.LatestIntel386;
+                }
+
+                if (asset == null) return;
+                paDialog.BackgroundWorker.ReportProgress(0, $"Downloading {asset.Name}...");
                 var response = _githubClient.Connection.Get<byte[]>(new Uri(asset.Url), new Dictionary<string, string>(), "application/octet-stream").Result;
 
-                paDialog.BackgroundWorker.ReportProgress(50, string.Format("Unzipping {0}...", asset.Name));
+                paDialog.BackgroundWorker.ReportProgress(50, $"Unzipping {asset.Name}...");
                 var filename = Path.GetTempFileName();
                 using (var fileStream = File.Create(filename))
                 {
@@ -72,7 +76,7 @@ namespace SyncthingTray
                 paDialog.BackgroundWorker.ReportProgress(100, "Finished!");
                 Thread.Sleep(500);
             };
-            paDialog.BackgroundWorker.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs args)
+            paDialog.BackgroundWorker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs args)
             {
                 if (args.Error != null)
                 {
@@ -84,7 +88,7 @@ namespace SyncthingTray
 
         private static LatestVersionRetrievedEventArgs GrabVersions(IEnumerable<ReleaseAsset> latest, Release release)
         {
-            var windowsLatest = latest.Where(asset => asset.Name.Contains("windows"));
+            var windowsLatest = latest.Where(asset => asset.Name.Contains("windows")).ToList();
             var windowsIntel386 = windowsLatest.FirstOrDefault(asset => asset.Name.Contains("386"));
             var windowsAmd64 = windowsLatest.FirstOrDefault(asset => asset.Name.Contains("amd64"));
 

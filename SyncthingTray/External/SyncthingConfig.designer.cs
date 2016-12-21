@@ -4,118 +4,137 @@
 //    <NameSpace>SyncthingTray.External</NameSpace><Collection>List</Collection><codeType>CSharp</codeType><EnableDataBinding>False</EnableDataBinding><EnableLazyLoading>False</EnableLazyLoading><TrackingChangesEnable>False</TrackingChangesEnable><GenTrackingClasses>False</GenTrackingClasses><HidePrivateFieldInIDE>False</HidePrivateFieldInIDE><EnableSummaryComment>False</EnableSummaryComment><VirtualProp>False</VirtualProp><IncludeSerializeMethod>True</IncludeSerializeMethod><UseBaseClass>False</UseBaseClass><GenBaseClass>False</GenBaseClass><GenerateCloneMethod>True</GenerateCloneMethod><GenerateDataContracts>False</GenerateDataContracts><CodeBaseTag>Net20</CodeBaseTag><SerializeMethodName>Serialize</SerializeMethodName><DeserializeMethodName>Deserialize</DeserializeMethodName><SaveToFileMethodName>SaveToFile</SaveToFileMethodName><LoadFromFileMethodName>LoadFromFile</LoadFromFileMethodName><GenerateXMLAttributes>False</GenerateXMLAttributes><OrderXMLAttrib>False</OrderXMLAttrib><EnableEncoding>False</EnableEncoding><AutomaticProperties>False</AutomaticProperties><GenerateShouldSerialize>False</GenerateShouldSerialize><DisableDebug>False</DisableDebug><PropNameSpecified>Default</PropNameSpecified><Encoder>UTF8</Encoder><CustomUsings></CustomUsings><ExcludeIncludedTypes>False</ExcludeIncludedTypes><EnableInitializeFields>True</EnableInitializeFields>
 //  </auto-generated>
 // ------------------------------------------------------------------------------
-namespace SyncthingTray.External {
-    using System;
-    using System.Diagnostics;
-    using System.Xml.Serialization;
-    using System.Collections;
-    using System.Xml.Schema;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Text;
+namespace SyncthingTray.External
+{
     using System.Collections.Generic;
-    
-    
-    public partial class configuration {
-        
+    using System.IO;
+
+
+    public partial class Configuration
+    {
+
         private List<configurationDevice> deviceField;
-        
+
         private configurationGui guiField;
-        
+
         private configurationOptions optionsField;
-        
+
         private int versionField;
-        
+
         private bool versionFieldSpecified;
-        
+
         private static System.Xml.Serialization.XmlSerializer serializer;
-        
-        public configuration() {
+
+        public Configuration()
+        {
             this.optionsField = new configurationOptions();
             this.guiField = new configurationGui();
             this.deviceField = new List<configurationDevice>();
         }
-        
-        public List<configurationDevice> device {
-            get {
-                return this.deviceField;
+
+        public List<configurationDevice> Device
+        {
+            get
+            {
+                return deviceField;
             }
-            set {
-                this.deviceField = value;
+            set
+            {
+                deviceField = value;
             }
         }
-        
-        public configurationGui gui {
-            get {
+
+        public configurationGui gui
+        {
+            get
+            {
                 return this.guiField;
             }
-            set {
+            set
+            {
                 this.guiField = value;
             }
         }
-        
-        public configurationOptions options {
-            get {
+
+        public configurationOptions options
+        {
+            get
+            {
                 return this.optionsField;
             }
-            set {
+            set
+            {
                 this.optionsField = value;
             }
         }
-        
-        public int version {
-            get {
+
+        public int version
+        {
+            get
+            {
                 return this.versionField;
             }
-            set {
+            set
+            {
                 this.versionField = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool versionSpecified {
-            get {
+        public bool versionSpecified
+        {
+            get
+            {
                 return this.versionFieldSpecified;
             }
-            set {
+            set
+            {
                 this.versionFieldSpecified = value;
             }
         }
-        
-        private static System.Xml.Serialization.XmlSerializer Serializer {
-            get {
-                if ((serializer == null)) {
-                    serializer = new System.Xml.Serialization.XmlSerializer(typeof(configuration));
+
+        private static System.Xml.Serialization.XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
+                    serializer = new System.Xml.Serialization.XmlSerializer(typeof(Configuration));
                 }
                 return serializer;
             }
         }
-        
+
         #region Serialize/Deserialize
         /// <summary>
         /// Serializes current configuration object into an XML document
         /// </summary>
         /// <returns>string XML value</returns>
-        public virtual string Serialize() {
+        public virtual string Serialize()
+        {
             System.IO.StreamReader streamReader = null;
             System.IO.MemoryStream memoryStream = null;
-            try {
+            try
+            {
                 memoryStream = new System.IO.MemoryStream();
                 Serializer.Serialize(memoryStream, this);
                 memoryStream.Seek(0, System.IO.SeekOrigin.Begin);
                 streamReader = new System.IO.StreamReader(memoryStream);
                 return streamReader.ReadToEnd();
             }
-            finally {
-                if ((streamReader != null)) {
+            finally
+            {
+                if ((streamReader != null))
+                {
                     streamReader.Dispose();
                 }
-                if ((memoryStream != null)) {
+                if ((memoryStream != null))
+                {
                     memoryStream.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Deserializes workflow markup into an configuration object
         /// </summary>
@@ -123,71 +142,86 @@ namespace SyncthingTray.External {
         /// <param name="obj">Output configuration object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
-        public static bool Deserialize(string xml, out configuration obj, out System.Exception exception) {
+        public static bool Deserialize(string xml, out Configuration obj, out System.Exception exception)
+        {
             exception = null;
-            obj = default(configuration);
-            try {
+            obj = default(Configuration);
+            try
+            {
                 obj = Deserialize(xml);
                 return true;
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
                 exception = ex;
                 return false;
             }
         }
-        
-        public static bool Deserialize(string xml, out configuration obj) {
+
+        public static bool Deserialize(string xml, out Configuration obj)
+        {
             System.Exception exception = null;
             return Deserialize(xml, out obj, out exception);
         }
-        
-        public static configuration Deserialize(string xml) {
+
+        public static Configuration Deserialize(string xml)
+        {
             System.IO.StringReader stringReader = null;
-            try {
+            try
+            {
                 stringReader = new System.IO.StringReader(xml);
-                return ((configuration)(Serializer.Deserialize(System.Xml.XmlReader.Create(stringReader))));
+                return ((Configuration)(Serializer.Deserialize(System.Xml.XmlReader.Create(stringReader))));
             }
-            finally {
-                if ((stringReader != null)) {
+            finally
+            {
+                if ((stringReader != null))
+                {
                     stringReader.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Serializes current configuration object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
-        public virtual bool SaveToFile(string fileName, out System.Exception exception) {
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
             exception = null;
-            try {
+            try
+            {
                 SaveToFile(fileName);
                 return true;
             }
-            catch (System.Exception e) {
+            catch (System.Exception e)
+            {
                 exception = e;
                 return false;
             }
         }
-        
-        public virtual void SaveToFile(string fileName) {
+
+        public virtual void SaveToFile(string fileName)
+        {
             System.IO.StreamWriter streamWriter = null;
-            try {
+            try
+            {
                 string xmlString = Serialize();
                 System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
                 streamWriter = xmlFile.CreateText();
                 streamWriter.WriteLine(xmlString);
                 streamWriter.Close();
             }
-            finally {
-                if ((streamWriter != null)) {
+            finally
+            {
+                if ((streamWriter != null))
+                {
                     streamWriter.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Deserializes xml markup from file into an configuration object
         /// </summary>
@@ -195,28 +229,34 @@ namespace SyncthingTray.External {
         /// <param name="obj">Output configuration object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
-        public static bool LoadFromFile(string fileName, out configuration obj, out System.Exception exception) {
+        public static bool LoadFromFile(string fileName, out Configuration obj, out System.Exception exception)
+        {
             exception = null;
-            obj = default(configuration);
-            try {
+            obj = default(Configuration);
+            try
+            {
                 obj = LoadFromFile(fileName);
                 return true;
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
                 exception = ex;
                 return false;
             }
         }
-        
-        public static bool LoadFromFile(string fileName, out configuration obj) {
+
+        public static bool LoadFromFile(string fileName, out Configuration obj)
+        {
             System.Exception exception = null;
             return LoadFromFile(fileName, out obj, out exception);
         }
-        
-        public static configuration LoadFromFile(string fileName) {
+
+        public static Configuration LoadFromFile(string fileName)
+        {
             System.IO.FileStream file = null;
             System.IO.StreamReader sr = null;
-            try {
+            try
+            {
                 file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
                 sr = new System.IO.StreamReader(file);
                 string xmlString = sr.ReadToEnd();
@@ -224,120 +264,148 @@ namespace SyncthingTray.External {
                 file.Close();
                 return Deserialize(xmlString);
             }
-            finally {
-                if ((file != null)) {
+            finally
+            {
+                if ((file != null))
+                {
                     file.Dispose();
                 }
-                if ((sr != null)) {
+                if ((sr != null))
+                {
                     sr.Dispose();
                 }
             }
         }
         #endregion
-        
+
         #region Clone method
         /// <summary>
         /// Create a clone of this configuration object
         /// </summary>
-        public virtual configuration Clone() {
-            return ((configuration)(this.MemberwiseClone()));
+        public virtual Configuration Clone()
+        {
+            return ((Configuration)(this.MemberwiseClone()));
         }
         #endregion
     }
-    
-    public partial class configurationDevice {
-        
+
+    public partial class configurationDevice
+    {
+
         private string addressField;
-        
+
         private string idField;
-        
+
         private string nameField;
-        
+
         private string compressionField;
-        
+
         private string introducerField;
-        
+
         private static System.Xml.Serialization.XmlSerializer serializer;
-        
-        public string address {
-            get {
+
+        public string address
+        {
+            get
+            {
                 return this.addressField;
             }
-            set {
+            set
+            {
                 this.addressField = value;
             }
         }
-        
-        public string id {
-            get {
+
+        public string id
+        {
+            get
+            {
                 return this.idField;
             }
-            set {
+            set
+            {
                 this.idField = value;
             }
         }
-        
-        public string name {
-            get {
+
+        public string name
+        {
+            get
+            {
                 return this.nameField;
             }
-            set {
+            set
+            {
                 this.nameField = value;
             }
         }
-        
-        public string compression {
-            get {
+
+        public string compression
+        {
+            get
+            {
                 return this.compressionField;
             }
-            set {
+            set
+            {
                 this.compressionField = value;
             }
         }
-        
-        public string introducer {
-            get {
+
+        public string introducer
+        {
+            get
+            {
                 return this.introducerField;
             }
-            set {
+            set
+            {
                 this.introducerField = value;
             }
         }
-        
-        private static System.Xml.Serialization.XmlSerializer Serializer {
-            get {
-                if ((serializer == null)) {
+
+        private static System.Xml.Serialization.XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
                     serializer = new System.Xml.Serialization.XmlSerializer(typeof(configurationDevice));
                 }
                 return serializer;
             }
         }
-        
+
         #region Serialize/Deserialize
         /// <summary>
         /// Serializes current configurationDevice object into an XML document
         /// </summary>
         /// <returns>string XML value</returns>
-        public virtual string Serialize() {
+        public virtual string Serialize()
+        {
             System.IO.StreamReader streamReader = null;
             System.IO.MemoryStream memoryStream = null;
-            try {
+            try
+            {
                 memoryStream = new System.IO.MemoryStream();
                 Serializer.Serialize(memoryStream, this);
                 memoryStream.Seek(0, System.IO.SeekOrigin.Begin);
                 streamReader = new System.IO.StreamReader(memoryStream);
                 return streamReader.ReadToEnd();
             }
-            finally {
-                if ((streamReader != null)) {
+            finally
+            {
+                if ((streamReader != null))
+                {
                     streamReader.Dispose();
                 }
-                if ((memoryStream != null)) {
+                if ((memoryStream != null))
+                {
                     memoryStream.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Deserializes workflow markup into an configurationDevice object
         /// </summary>
@@ -345,71 +413,86 @@ namespace SyncthingTray.External {
         /// <param name="obj">Output configurationDevice object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
-        public static bool Deserialize(string xml, out configurationDevice obj, out System.Exception exception) {
+        public static bool Deserialize(string xml, out configurationDevice obj, out System.Exception exception)
+        {
             exception = null;
             obj = default(configurationDevice);
-            try {
+            try
+            {
                 obj = Deserialize(xml);
                 return true;
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
                 exception = ex;
                 return false;
             }
         }
-        
-        public static bool Deserialize(string xml, out configurationDevice obj) {
+
+        public static bool Deserialize(string xml, out configurationDevice obj)
+        {
             System.Exception exception = null;
             return Deserialize(xml, out obj, out exception);
         }
-        
-        public static configurationDevice Deserialize(string xml) {
+
+        public static configurationDevice Deserialize(string xml)
+        {
             System.IO.StringReader stringReader = null;
-            try {
+            try
+            {
                 stringReader = new System.IO.StringReader(xml);
                 return ((configurationDevice)(Serializer.Deserialize(System.Xml.XmlReader.Create(stringReader))));
             }
-            finally {
-                if ((stringReader != null)) {
+            finally
+            {
+                if ((stringReader != null))
+                {
                     stringReader.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Serializes current configurationDevice object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
-        public virtual bool SaveToFile(string fileName, out System.Exception exception) {
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
             exception = null;
-            try {
+            try
+            {
                 SaveToFile(fileName);
                 return true;
             }
-            catch (System.Exception e) {
+            catch (System.Exception e)
+            {
                 exception = e;
                 return false;
             }
         }
-        
-        public virtual void SaveToFile(string fileName) {
+
+        public virtual void SaveToFile(string fileName)
+        {
             System.IO.StreamWriter streamWriter = null;
-            try {
+            try
+            {
                 string xmlString = Serialize();
                 System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
                 streamWriter = xmlFile.CreateText();
                 streamWriter.WriteLine(xmlString);
                 streamWriter.Close();
             }
-            finally {
-                if ((streamWriter != null)) {
+            finally
+            {
+                if ((streamWriter != null))
+                {
                     streamWriter.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Deserializes xml markup from file into an configurationDevice object
         /// </summary>
@@ -417,28 +500,34 @@ namespace SyncthingTray.External {
         /// <param name="obj">Output configurationDevice object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
-        public static bool LoadFromFile(string fileName, out configurationDevice obj, out System.Exception exception) {
+        public static bool LoadFromFile(string fileName, out configurationDevice obj, out System.Exception exception)
+        {
             exception = null;
             obj = default(configurationDevice);
-            try {
+            try
+            {
                 obj = LoadFromFile(fileName);
                 return true;
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
                 exception = ex;
                 return false;
             }
         }
-        
-        public static bool LoadFromFile(string fileName, out configurationDevice obj) {
+
+        public static bool LoadFromFile(string fileName, out configurationDevice obj)
+        {
             System.Exception exception = null;
             return LoadFromFile(fileName, out obj, out exception);
         }
-        
-        public static configurationDevice LoadFromFile(string fileName) {
+
+        public static configurationDevice LoadFromFile(string fileName)
+        {
             System.IO.FileStream file = null;
             System.IO.StreamReader sr = null;
-            try {
+            try
+            {
                 file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
                 sr = new System.IO.StreamReader(file);
                 string xmlString = sr.ReadToEnd();
@@ -446,133 +535,164 @@ namespace SyncthingTray.External {
                 file.Close();
                 return Deserialize(xmlString);
             }
-            finally {
-                if ((file != null)) {
+            finally
+            {
+                if ((file != null))
+                {
                     file.Dispose();
                 }
-                if ((sr != null)) {
+                if ((sr != null))
+                {
                     sr.Dispose();
                 }
             }
         }
         #endregion
-        
+
         #region Clone method
         /// <summary>
         /// Create a clone of this configurationDevice object
         /// </summary>
-        public virtual configurationDevice Clone() {
+        public virtual configurationDevice Clone()
+        {
             return ((configurationDevice)(this.MemberwiseClone()));
         }
         #endregion
     }
-    
-    public partial class configurationGui {
-        
+
+    public partial class configurationGui
+    {
+
         private string addressField;
-        
+
         private string apikeyField;
-        
+
         private bool enabledField;
-        
+
         private bool enabledFieldSpecified;
-        
+
         private bool tlsField;
-        
+
         private bool tlsFieldSpecified;
-        
+
         private static System.Xml.Serialization.XmlSerializer serializer;
-        
-        public string address {
-            get {
+
+        public string address
+        {
+            get
+            {
                 return this.addressField;
             }
-            set {
+            set
+            {
                 this.addressField = value;
             }
         }
-        
-        public string apikey {
-            get {
+
+        public string apikey
+        {
+            get
+            {
                 return this.apikeyField;
             }
-            set {
+            set
+            {
                 this.apikeyField = value;
             }
         }
-        
-        public bool enabled {
-            get {
+
+        public bool enabled
+        {
+            get
+            {
                 return this.enabledField;
             }
-            set {
+            set
+            {
                 this.enabledField = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool enabledSpecified {
-            get {
+        public bool enabledSpecified
+        {
+            get
+            {
                 return this.enabledFieldSpecified;
             }
-            set {
+            set
+            {
                 this.enabledFieldSpecified = value;
             }
         }
-        
-        public bool tls {
-            get {
+
+        public bool tls
+        {
+            get
+            {
                 return this.tlsField;
             }
-            set {
+            set
+            {
                 this.tlsField = value;
             }
         }
-        
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool tlsSpecified {
-            get {
+        public bool tlsSpecified
+        {
+            get
+            {
                 return this.tlsFieldSpecified;
             }
-            set {
+            set
+            {
                 this.tlsFieldSpecified = value;
             }
         }
-        
-        private static System.Xml.Serialization.XmlSerializer Serializer {
-            get {
-                if ((serializer == null)) {
+
+        private static System.Xml.Serialization.XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
                     serializer = new System.Xml.Serialization.XmlSerializer(typeof(configurationGui));
                 }
                 return serializer;
             }
         }
-        
+
         #region Serialize/Deserialize
         /// <summary>
         /// Serializes current configurationGui object into an XML document
         /// </summary>
         /// <returns>string XML value</returns>
-        public virtual string Serialize() {
+        public virtual string Serialize()
+        {
             System.IO.StreamReader streamReader = null;
             System.IO.MemoryStream memoryStream = null;
-            try {
+            try
+            {
                 memoryStream = new System.IO.MemoryStream();
                 Serializer.Serialize(memoryStream, this);
                 memoryStream.Seek(0, System.IO.SeekOrigin.Begin);
                 streamReader = new System.IO.StreamReader(memoryStream);
                 return streamReader.ReadToEnd();
             }
-            finally {
-                if ((streamReader != null)) {
+            finally
+            {
+                if ((streamReader != null))
+                {
                     streamReader.Dispose();
                 }
-                if ((memoryStream != null)) {
+                if ((memoryStream != null))
+                {
                     memoryStream.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Deserializes workflow markup into an configurationGui object
         /// </summary>
@@ -580,71 +700,86 @@ namespace SyncthingTray.External {
         /// <param name="obj">Output configurationGui object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
-        public static bool Deserialize(string xml, out configurationGui obj, out System.Exception exception) {
+        public static bool Deserialize(string xml, out configurationGui obj, out System.Exception exception)
+        {
             exception = null;
             obj = default(configurationGui);
-            try {
+            try
+            {
                 obj = Deserialize(xml);
                 return true;
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
                 exception = ex;
                 return false;
             }
         }
-        
-        public static bool Deserialize(string xml, out configurationGui obj) {
+
+        public static bool Deserialize(string xml, out configurationGui obj)
+        {
             System.Exception exception = null;
             return Deserialize(xml, out obj, out exception);
         }
-        
-        public static configurationGui Deserialize(string xml) {
+
+        public static configurationGui Deserialize(string xml)
+        {
             System.IO.StringReader stringReader = null;
-            try {
+            try
+            {
                 stringReader = new System.IO.StringReader(xml);
                 return ((configurationGui)(Serializer.Deserialize(System.Xml.XmlReader.Create(stringReader))));
             }
-            finally {
-                if ((stringReader != null)) {
+            finally
+            {
+                if ((stringReader != null))
+                {
                     stringReader.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Serializes current configurationGui object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
-        public virtual bool SaveToFile(string fileName, out System.Exception exception) {
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
             exception = null;
-            try {
+            try
+            {
                 SaveToFile(fileName);
                 return true;
             }
-            catch (System.Exception e) {
+            catch (System.Exception e)
+            {
                 exception = e;
                 return false;
             }
         }
-        
-        public virtual void SaveToFile(string fileName) {
+
+        public virtual void SaveToFile(string fileName)
+        {
             System.IO.StreamWriter streamWriter = null;
-            try {
+            try
+            {
                 string xmlString = Serialize();
                 System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
                 streamWriter = xmlFile.CreateText();
                 streamWriter.WriteLine(xmlString);
                 streamWriter.Close();
             }
-            finally {
-                if ((streamWriter != null)) {
+            finally
+            {
+                if ((streamWriter != null))
+                {
                     streamWriter.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Deserializes xml markup from file into an configurationGui object
         /// </summary>
@@ -652,28 +787,34 @@ namespace SyncthingTray.External {
         /// <param name="obj">Output configurationGui object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
-        public static bool LoadFromFile(string fileName, out configurationGui obj, out System.Exception exception) {
+        public static bool LoadFromFile(string fileName, out configurationGui obj, out System.Exception exception)
+        {
             exception = null;
             obj = default(configurationGui);
-            try {
+            try
+            {
                 obj = LoadFromFile(fileName);
                 return true;
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
                 exception = ex;
                 return false;
             }
         }
-        
-        public static bool LoadFromFile(string fileName, out configurationGui obj) {
+
+        public static bool LoadFromFile(string fileName, out configurationGui obj)
+        {
             System.Exception exception = null;
             return LoadFromFile(fileName, out obj, out exception);
         }
-        
-        public static configurationGui LoadFromFile(string fileName) {
+
+        public static configurationGui LoadFromFile(string fileName)
+        {
             System.IO.FileStream file = null;
             System.IO.StreamReader sr = null;
-            try {
+            try
+            {
                 file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
                 sr = new System.IO.StreamReader(file);
                 string xmlString = sr.ReadToEnd();
@@ -681,300 +822,377 @@ namespace SyncthingTray.External {
                 file.Close();
                 return Deserialize(xmlString);
             }
-            finally {
-                if ((file != null)) {
+            finally
+            {
+                if ((file != null))
+                {
                     file.Dispose();
                 }
-                if ((sr != null)) {
+                if ((sr != null))
+                {
                     sr.Dispose();
                 }
             }
         }
         #endregion
-        
+
         #region Clone method
         /// <summary>
         /// Create a clone of this configurationGui object
         /// </summary>
-        public virtual configurationGui Clone() {
+        public virtual configurationGui Clone()
+        {
             return ((configurationGui)(this.MemberwiseClone()));
         }
         #endregion
     }
-    
-    public partial class configurationOptions {
-        
+
+    public partial class configurationOptions
+    {
+
         private string listenAddressField;
-        
+
         private List<string> globalAnnounceServerField;
-        
+
         private bool globalAnnounceEnabledField;
-        
+
         private bool localAnnounceEnabledField;
-        
+
         private int localAnnouncePortField;
-        
+
         private string localAnnounceMCAddrField;
-        
+
         private int maxSendKbpsField;
-        
+
         private int maxRecvKbpsField;
-        
+
         private int reconnectionIntervalSField;
-        
+
         private bool startBrowserField;
-        
+
         private bool upnpEnabledField;
-        
+
         private int upnpLeaseMinutesField;
-        
+
         private int upnpRenewalMinutesField;
-        
+
         private int urAcceptedField;
-        
+
         private string urUniqueIDField;
-        
+
         private bool restartOnWakeupField;
-        
+
         private int autoUpgradeIntervalHField;
-        
+
         private int keepTemporariesHField;
-        
+
         private bool cacheIgnoredFilesField;
-        
+
         private int progressUpdateIntervalSField;
-        
+
         private bool symlinksEnabledField;
-        
+
         private static System.Xml.Serialization.XmlSerializer serializer;
-        
-        public configurationOptions() {
+
+        public configurationOptions()
+        {
             this.globalAnnounceServerField = new List<string>();
         }
-        
-        public string listenAddress {
-            get {
+
+        public string listenAddress
+        {
+            get
+            {
                 return this.listenAddressField;
             }
-            set {
+            set
+            {
                 this.listenAddressField = value;
             }
         }
-        
-        public List<string> globalAnnounceServer {
-            get {
+
+        public List<string> globalAnnounceServer
+        {
+            get
+            {
                 return this.globalAnnounceServerField;
             }
-            set {
+            set
+            {
                 this.globalAnnounceServerField = value;
             }
         }
-        
-        public bool globalAnnounceEnabled {
-            get {
+
+        public bool globalAnnounceEnabled
+        {
+            get
+            {
                 return this.globalAnnounceEnabledField;
             }
-            set {
+            set
+            {
                 this.globalAnnounceEnabledField = value;
             }
         }
-        
-        public bool localAnnounceEnabled {
-            get {
+
+        public bool localAnnounceEnabled
+        {
+            get
+            {
                 return this.localAnnounceEnabledField;
             }
-            set {
+            set
+            {
                 this.localAnnounceEnabledField = value;
             }
         }
-        
-        public int localAnnouncePort {
-            get {
+
+        public int localAnnouncePort
+        {
+            get
+            {
                 return this.localAnnouncePortField;
             }
-            set {
+            set
+            {
                 this.localAnnouncePortField = value;
             }
         }
-        
-        public string localAnnounceMCAddr {
-            get {
+
+        public string localAnnounceMCAddr
+        {
+            get
+            {
                 return this.localAnnounceMCAddrField;
             }
-            set {
+            set
+            {
                 this.localAnnounceMCAddrField = value;
             }
         }
-        
-        public int maxSendKbps {
-            get {
+
+        public int maxSendKbps
+        {
+            get
+            {
                 return this.maxSendKbpsField;
             }
-            set {
+            set
+            {
                 this.maxSendKbpsField = value;
             }
         }
-        
-        public int maxRecvKbps {
-            get {
+
+        public int maxRecvKbps
+        {
+            get
+            {
                 return this.maxRecvKbpsField;
             }
-            set {
+            set
+            {
                 this.maxRecvKbpsField = value;
             }
         }
-        
-        public int reconnectionIntervalS {
-            get {
+
+        public int reconnectionIntervalS
+        {
+            get
+            {
                 return this.reconnectionIntervalSField;
             }
-            set {
+            set
+            {
                 this.reconnectionIntervalSField = value;
             }
         }
-        
-        public bool startBrowser {
-            get {
+
+        public bool startBrowser
+        {
+            get
+            {
                 return this.startBrowserField;
             }
-            set {
+            set
+            {
                 this.startBrowserField = value;
             }
         }
-        
-        public bool upnpEnabled {
-            get {
+
+        public bool upnpEnabled
+        {
+            get
+            {
                 return this.upnpEnabledField;
             }
-            set {
+            set
+            {
                 this.upnpEnabledField = value;
             }
         }
-        
-        public int upnpLeaseMinutes {
-            get {
+
+        public int upnpLeaseMinutes
+        {
+            get
+            {
                 return this.upnpLeaseMinutesField;
             }
-            set {
+            set
+            {
                 this.upnpLeaseMinutesField = value;
             }
         }
-        
-        public int upnpRenewalMinutes {
-            get {
+
+        public int upnpRenewalMinutes
+        {
+            get
+            {
                 return this.upnpRenewalMinutesField;
             }
-            set {
+            set
+            {
                 this.upnpRenewalMinutesField = value;
             }
         }
-        
-        public int urAccepted {
-            get {
+
+        public int urAccepted
+        {
+            get
+            {
                 return this.urAcceptedField;
             }
-            set {
+            set
+            {
                 this.urAcceptedField = value;
             }
         }
-        
-        public string urUniqueID {
-            get {
+
+        public string urUniqueID
+        {
+            get
+            {
                 return this.urUniqueIDField;
             }
-            set {
+            set
+            {
                 this.urUniqueIDField = value;
             }
         }
-        
-        public bool restartOnWakeup {
-            get {
+
+        public bool restartOnWakeup
+        {
+            get
+            {
                 return this.restartOnWakeupField;
             }
-            set {
+            set
+            {
                 this.restartOnWakeupField = value;
             }
         }
-        
-        public int autoUpgradeIntervalH {
-            get {
+
+        public int autoUpgradeIntervalH
+        {
+            get
+            {
                 return this.autoUpgradeIntervalHField;
             }
-            set {
+            set
+            {
                 this.autoUpgradeIntervalHField = value;
             }
         }
-        
-        public int keepTemporariesH {
-            get {
+
+        public int keepTemporariesH
+        {
+            get
+            {
                 return this.keepTemporariesHField;
             }
-            set {
+            set
+            {
                 this.keepTemporariesHField = value;
             }
         }
-        
-        public bool cacheIgnoredFiles {
-            get {
+
+        public bool cacheIgnoredFiles
+        {
+            get
+            {
                 return this.cacheIgnoredFilesField;
             }
-            set {
+            set
+            {
                 this.cacheIgnoredFilesField = value;
             }
         }
-        
-        public int progressUpdateIntervalS {
-            get {
+
+        public int progressUpdateIntervalS
+        {
+            get
+            {
                 return this.progressUpdateIntervalSField;
             }
-            set {
+            set
+            {
                 this.progressUpdateIntervalSField = value;
             }
         }
-        
-        public bool symlinksEnabled {
-            get {
+
+        public bool symlinksEnabled
+        {
+            get
+            {
                 return this.symlinksEnabledField;
             }
-            set {
+            set
+            {
                 this.symlinksEnabledField = value;
             }
         }
-        
-        private static System.Xml.Serialization.XmlSerializer Serializer {
-            get {
-                if ((serializer == null)) {
+
+        private static System.Xml.Serialization.XmlSerializer Serializer
+        {
+            get
+            {
+                if ((serializer == null))
+                {
                     serializer = new System.Xml.Serialization.XmlSerializer(typeof(configurationOptions));
                 }
                 return serializer;
             }
         }
-        
+
         #region Serialize/Deserialize
         /// <summary>
         /// Serializes current configurationOptions object into an XML document
         /// </summary>
         /// <returns>string XML value</returns>
-        public virtual string Serialize() {
+        public virtual string Serialize()
+        {
             System.IO.StreamReader streamReader = null;
             System.IO.MemoryStream memoryStream = null;
-            try {
+            try
+            {
                 memoryStream = new System.IO.MemoryStream();
                 Serializer.Serialize(memoryStream, this);
                 memoryStream.Seek(0, System.IO.SeekOrigin.Begin);
                 streamReader = new System.IO.StreamReader(memoryStream);
                 return streamReader.ReadToEnd();
             }
-            finally {
-                if ((streamReader != null)) {
+            finally
+            {
+                if ((streamReader != null))
+                {
                     streamReader.Dispose();
                 }
-                if ((memoryStream != null)) {
+                if ((memoryStream != null))
+                {
                     memoryStream.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Deserializes workflow markup into an configurationOptions object
         /// </summary>
@@ -982,71 +1200,86 @@ namespace SyncthingTray.External {
         /// <param name="obj">Output configurationOptions object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
-        public static bool Deserialize(string xml, out configurationOptions obj, out System.Exception exception) {
+        public static bool Deserialize(string xml, out configurationOptions obj, out System.Exception exception)
+        {
             exception = null;
             obj = default(configurationOptions);
-            try {
+            try
+            {
                 obj = Deserialize(xml);
                 return true;
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
                 exception = ex;
                 return false;
             }
         }
-        
-        public static bool Deserialize(string xml, out configurationOptions obj) {
+
+        public static bool Deserialize(string xml, out configurationOptions obj)
+        {
             System.Exception exception = null;
             return Deserialize(xml, out obj, out exception);
         }
-        
-        public static configurationOptions Deserialize(string xml) {
+
+        public static configurationOptions Deserialize(string xml)
+        {
             System.IO.StringReader stringReader = null;
-            try {
+            try
+            {
                 stringReader = new System.IO.StringReader(xml);
                 return ((configurationOptions)(Serializer.Deserialize(System.Xml.XmlReader.Create(stringReader))));
             }
-            finally {
-                if ((stringReader != null)) {
+            finally
+            {
+                if ((stringReader != null))
+                {
                     stringReader.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Serializes current configurationOptions object into file
         /// </summary>
         /// <param name="fileName">full path of outupt xml file</param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
-        public virtual bool SaveToFile(string fileName, out System.Exception exception) {
+        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        {
             exception = null;
-            try {
+            try
+            {
                 SaveToFile(fileName);
                 return true;
             }
-            catch (System.Exception e) {
+            catch (System.Exception e)
+            {
                 exception = e;
                 return false;
             }
         }
-        
-        public virtual void SaveToFile(string fileName) {
+
+        public virtual void SaveToFile(string fileName)
+        {
             System.IO.StreamWriter streamWriter = null;
-            try {
+            try
+            {
                 string xmlString = Serialize();
                 System.IO.FileInfo xmlFile = new System.IO.FileInfo(fileName);
                 streamWriter = xmlFile.CreateText();
                 streamWriter.WriteLine(xmlString);
                 streamWriter.Close();
             }
-            finally {
-                if ((streamWriter != null)) {
+            finally
+            {
+                if ((streamWriter != null))
+                {
                     streamWriter.Dispose();
                 }
             }
         }
-        
+
         /// <summary>
         /// Deserializes xml markup from file into an configurationOptions object
         /// </summary>
@@ -1054,28 +1287,34 @@ namespace SyncthingTray.External {
         /// <param name="obj">Output configurationOptions object</param>
         /// <param name="exception">output Exception value if deserialize failed</param>
         /// <returns>true if this XmlSerializer can deserialize the object; otherwise, false</returns>
-        public static bool LoadFromFile(string fileName, out configurationOptions obj, out System.Exception exception) {
+        public static bool LoadFromFile(string fileName, out configurationOptions obj, out System.Exception exception)
+        {
             exception = null;
             obj = default(configurationOptions);
-            try {
+            try
+            {
                 obj = LoadFromFile(fileName);
                 return true;
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
                 exception = ex;
                 return false;
             }
         }
-        
-        public static bool LoadFromFile(string fileName, out configurationOptions obj) {
+
+        public static bool LoadFromFile(string fileName, out configurationOptions obj)
+        {
             System.Exception exception = null;
             return LoadFromFile(fileName, out obj, out exception);
         }
-        
-        public static configurationOptions LoadFromFile(string fileName) {
+
+        public static configurationOptions LoadFromFile(string fileName)
+        {
             System.IO.FileStream file = null;
             System.IO.StreamReader sr = null;
-            try {
+            try
+            {
                 file = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.Read);
                 sr = new System.IO.StreamReader(file);
                 string xmlString = sr.ReadToEnd();
@@ -1083,22 +1322,26 @@ namespace SyncthingTray.External {
                 file.Close();
                 return Deserialize(xmlString);
             }
-            finally {
-                if ((file != null)) {
+            finally
+            {
+                if ((file != null))
+                {
                     file.Dispose();
                 }
-                if ((sr != null)) {
+                if ((sr != null))
+                {
                     sr.Dispose();
                 }
             }
         }
         #endregion
-        
+
         #region Clone method
         /// <summary>
         /// Create a clone of this configurationOptions object
         /// </summary>
-        public virtual configurationOptions Clone() {
+        public virtual configurationOptions Clone()
+        {
             return ((configurationOptions)(this.MemberwiseClone()));
         }
         #endregion

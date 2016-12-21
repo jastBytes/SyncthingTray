@@ -1,10 +1,10 @@
 ﻿<configuration version="8">
-  <device id="V7HCVAK-V7HCVAK-V7HCVAK-KT4ICS5-KT4ICS5-KT4ICS5-KT4ICS5" name="stef" compression="true" introducer="false">
+  <Device id="V7HCVAK-V7HCVAK-V7HCVAK-KT4ICS5-KT4ICS5-KT4ICS5-KT4ICS5" name="stef" compression="true" introducer="false">
     <address>dynamic</address>
-  </device>
-  <device id="RCVHQYS-RCVHQYS-RCVHQYS-RCVHQYS-VZPPVG3-VZPPVG3-VZPPVG3" name="pc" compression="false" introducer="false">
+  </Device>
+  <Device id="RCVHQYS-RCVHQYS-RCVHQYS-RCVHQYS-VZPPVG3-VZPPVG3-VZPPVG3" name="pc" compression="false" introducer="false">
     <address>dynamic</address>
-  </device>
+  </Device>
   <gui enabled="true" tls="false">
     <address>127.0.0.1:8080</address>
     <apikey>12340ghky16Wo7IktP2xpgsNiGPAabcd</apikey>

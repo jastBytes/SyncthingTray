@@ -1,6 +1,4 @@
-﻿using SyncthingTray.Properties;
-
-namespace SyncthingTray
+﻿namespace SyncthingTray.UI
 {
     partial class SyncthingTray
     {
@@ -113,7 +111,7 @@ namespace SyncthingTray
             this.showSyncthingTraySettingsToolStripMenuItem.Name = "showSyncthingTraySettingsToolStripMenuItem";
             this.showSyncthingTraySettingsToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.showSyncthingTraySettingsToolStripMenuItem.Text = "Show SyncthingTray";
-            this.showSyncthingTraySettingsToolStripMenuItem.Click += new System.EventHandler(this.showSyncthingTraySettingsToolStripMenuItem_Click);
+            this.showSyncthingTraySettingsToolStripMenuItem.Click += new System.EventHandler(this.ShowSyncthingTraySettingsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -189,8 +187,8 @@ namespace SyncthingTray
             // 
             // textBoxLog
             // 
-            this.textBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxLog.Location = new System.Drawing.Point(12, 145);
             this.textBoxLog.Multiline = true;
@@ -213,7 +211,7 @@ namespace SyncthingTray
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.checkBoxUseSpecificVersion);
             this.groupBox1.Controls.Add(this.chkShowTrayNotifications);
@@ -331,7 +329,6 @@ namespace SyncthingTray
             this.Text = "SyncthingTray";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SyncthingTray_FormClosing);
             this.Shown += new System.EventHandler(this.SyncthingTray_Shown);
-            this.Resize += new System.EventHandler(this.SyncthingTray_Resize);
             this.contextMenuStrip.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

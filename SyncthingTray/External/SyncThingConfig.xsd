@@ -6,7 +6,7 @@
   <xs:element name="configuration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="device" maxOccurs="unbounded" minOccurs="0">
+        <xs:element name="Device" maxOccurs="unbounded" minOccurs="0">
           <xs:complexType>
             <xs:sequence>
               <xs:element type="xs:string" name="address"/>

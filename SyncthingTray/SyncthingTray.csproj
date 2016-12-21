@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SyncthingTray</RootNamespace>
     <AssemblyName>SyncthingTray</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -37,7 +37,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>logo-64.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\logo-64.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -140,21 +140,32 @@
     <Compile Include="External\SyncthingConfig.designer.cs">
       <DependentUpon>SyncthingConfig.xsd</DependentUpon>
     </Compile>
-    <Compile Include="GitHubHelper.cs" />
-    <Compile Include="ProcessHelper.cs" />
-    <Compile Include="RegistryHelper.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\GitHubUtil.cs" />
+    <Compile Include="Utilities\ProcessUtil.cs" />
+    <Compile Include="Utilities\RegistryUtil.cs" />
     <Compile Include="External\SyncthingConfig.cs">
       <DependentUpon>SyncthingConfig.xsd</DependentUpon>
     </Compile>
-    <Compile Include="SyncthingTray.cs">
+    <Compile Include="UI\SyncthingTray.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SyncthingTray.Designer.cs">
+    <Compile Include="UI\SyncthingTray.Designer.cs">
       <DependentUpon>SyncthingTray.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -166,19 +177,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SyncthingTray.resx">
+    <EmbeddedResource Include="UI\SyncthingTray.resx">
       <DependentUpon>SyncthingTray.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="External\GenerateSyncthingConfigClass.cmd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -198,12 +204,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="logo-64-grayscale.ico" />
+    <None Include="Resources\logo-64-grayscale.ico" />
     <Content Include="External\SyncthingConfig.xml" />
     <Content Include="External\Xsd2Code.Addin.dll" />
     <Content Include="External\Xsd2Code.exe" />
     <Content Include="External\Xsd2Code.Library.Dll" />
-    <Content Include="logo-64.ico" />
+    <Content Include="Resources\logo-64.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
