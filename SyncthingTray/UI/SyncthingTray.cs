@@ -190,11 +190,9 @@ namespace SyncthingTray.UI
                 {
                     if (!File.Exists(expectedPath))
                     {
-                        new GitHubUtil().GetLatestVersion();
-                        {
-                            Settings.Default.SyncthingPath = expectedPath;
-                            Settings.Default.Save();
-                        }
+                        GitHubUtil.GetLatestVersion();
+                        Settings.Default.SyncthingPath = expectedPath;
+                        Settings.Default.Save();
                         txtPath.Text = Settings.Default.SyncthingPath;
                         CheckPath(txtPath.Text.Trim());
                     }

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace SyncthingTray.Dialogs
+namespace SyncthingTray.UI.Dialogs
 {
     public partial class PendingActivityDialog : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace SyncthingTray.Dialogs
+﻿namespace SyncthingTray.UI.Dialogs
 {
     partial class PendingActivityDialog
     {

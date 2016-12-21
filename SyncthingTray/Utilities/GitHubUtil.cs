@@ -1,6 +1,6 @@
 ﻿using Octokit;
-using SyncthingTray.Dialogs;
 using SyncthingTray.Properties;
+using SyncthingTray.UI.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,27 +11,11 @@ using System.Windows.Forms;
 
 namespace SyncthingTray.Utilities
 {
-    public class GitHubUtil
+    public static class GitHubUtil
     {
-        private readonly GitHubClient _githubClient;
+        private static readonly GitHubClient GithubClient = new GitHubClient(new ProductHeaderValue(Settings.Default.ApplicationName));
 
-        public delegate void LatestVersionRetrievedEventHandler(object sender, LatestVersionRetrievedEventArgs args);
-        public event LatestVersionRetrievedEventHandler LatestVersionRetrievedEvent;
-
-        public GitHubUtil()
-        {
-            _githubClient = new GitHubClient(new ProductHeaderValue("SyncthingTray"));
-        }
-
-        public async void GetLatestVersionAsync()
-        {
-            var repos = await _githubClient.Release.GetAll("syncthing", "syncthing");
-            var latest = await _githubClient.Release.GetAssets("syncthing", "syncthing", repos[0].Id);
-
-            LatestVersionRetrievedEvent?.Invoke(this, GrabVersions(latest, repos[0]));
-        }
-
-        public void GetLatestVersion()
+        public static void GetLatestVersion()
         {
             var paDialog = new PendingActivityDialog
             {
@@ -43,20 +27,20 @@ namespace SyncthingTray.Utilities
             {
                 paDialog.BackgroundWorker.ReportProgress(0, "Checking for latest version...");
 
-                var repos = _githubClient.Release.GetAll("syncthing", "syncthing").Result;
+                var repos = GithubClient.Release.GetAll("syncthing", "syncthing").Result;
                 var repoIndex = 0;
                 ReleaseAsset asset = null;
 
                 while (asset == null && repoIndex < repos.Count)
                 {
-                    var latest = _githubClient.Release.GetAssets("syncthing", "syncthing", repos[0].Id).Result;
-                    var versions = GrabVersions(latest, repos[0]);
+                    var latest = GithubClient.Release.GetAssets("syncthing", "syncthing", repos[0].Id).Result;
+                    var versions = GrabVersions(latest, repos[repoIndex++]);
                     asset = Environment.Is64BitOperatingSystem ? versions.LatestAmd64 : versions.LatestIntel386;
                 }
 
                 if (asset == null) return;
                 paDialog.BackgroundWorker.ReportProgress(0, $"Downloading {asset.Name}...");
-                var response = _githubClient.Connection.Get<byte[]>(new Uri(asset.Url), new Dictionary<string, string>(), "application/octet-stream").Result;
+                var response = GithubClient.Connection.Get<byte[]>(new Uri(asset.Url), new Dictionary<string, string>(), "application/octet-stream").Result;
 
                 paDialog.BackgroundWorker.ReportProgress(50, $"Unzipping {asset.Name}...");
                 var filename = Path.GetTempFileName();
